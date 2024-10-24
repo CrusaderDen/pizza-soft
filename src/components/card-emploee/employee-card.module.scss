@@ -1,0 +1,60 @@
+.cardWrapper {
+  display: flex;
+  column-gap: 30px;
+
+  width: 500px;
+  margin: 10px 0;
+  padding: 10px 15px;
+
+  background-color: #72dd72;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 2px 2px 8px rgb(0 0 0 / 30%);
+}
+
+.name {
+  flex: 500px;
+}
+
+.phone {
+  position: relative;
+  flex: 500px;
+
+  &::after {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: -15px;
+    transform: translateY(-50%);
+
+    display: block;
+
+    width: 2px;
+    height: 25px;
+
+    background: #000;
+    border-radius: 3px;
+  }
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+
+    display: block;
+
+    width: 2px;
+    height: 25px;
+
+    background: #000;
+    border-radius: 3px;
+  }
+}
+
+.role {
+  flex: 200px;
+}
