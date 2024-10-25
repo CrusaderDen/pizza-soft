@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { fetchData } from '@/app/app-api'
 import { Employee, Role } from '@/app/app-api.types'
@@ -7,13 +7,18 @@ import { Sidebar } from '@/components/sidebar/sidebar'
 
 import s from './App.module.scss'
 
+type SortVariant =
+  | 'by-date-of-birthday-asc'
+  | 'by-date-of-birthday-desc'
+  | 'by-name-asc'
+  | 'by-name-desc'
+  | 'default'
+
 function App() {
   const [selectedRoles, setSelectedRoles] = useState<Role[]>([])
   const [statusChecked, setStatusChecked] = useState(false)
-  const [sortByName, setSortByName] = useState<'asc' | 'default' | 'desc' | 'none'>('default')
-  const [sortByDateOfBirthday, setSortByDateOfBirthday] = useState<
-    'asc' | 'default' | 'desc' | 'none'
-  >('none')
+  const [sortBy, setSortBy] = useState<SortVariant>('default')
+
   const [data, setData] = useState<Employee[]>([])
 
   fetchData().then(res => {
@@ -32,35 +37,27 @@ function App() {
     employeesForRender = employeesForRender.filter(employee => employee.isArchive)
   }
 
-  useEffect(() => {
-    setSortByName('none')
-  }, [sortByDateOfBirthday])
-
-  useEffect(() => {
-    setSortByDateOfBirthday('none')
-  }, [sortByName])
-
-  if (sortByName === 'asc') {
+  if (sortBy === 'by-name-asc') {
     employeesForRender = employeesForRender.sort((a, b) => (a.name < b.name ? -1 : 1))
   }
 
-  if (sortByName === 'desc') {
+  if (sortBy === 'by-name-desc') {
     employeesForRender = employeesForRender.sort((a, b) => (a.name > b.name ? -1 : 1))
   }
 
-  if (sortByDateOfBirthday === 'asc') {
+  if (sortBy === 'by-date-of-birthday-asc') {
     employeesForRender = employeesForRender.sort(
       (a, b) => parseDate(a.birthday) - parseDate(b.birthday)
     )
   }
 
-  if (sortByDateOfBirthday === 'desc') {
+  if (sortBy === 'by-date-of-birthday-desc') {
     employeesForRender = employeesForRender.sort(
       (a, b) => parseDate(b.birthday) - parseDate(a.birthday)
     )
   }
 
-  if (sortByName === 'default') {
+  if (sortBy === 'default') {
     employeesForRender
       .sort((a, b) => (a.name < b.name ? -1 : 1))
       .sort((a, b) => (a.role < b.role ? -1 : 1))
@@ -82,8 +79,7 @@ function App() {
       <Sidebar
         selectedRoles={selectedRoles}
         setSelectedRoles={setSelectedRoles}
-        setSortByDateOfBirthday={setSortByDateOfBirthday}
-        setSortByName={setSortByName}
+        setSortBy={setSortBy}
         setStatusChecked={setStatusChecked}
       />
     </div>
