@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
-import { Employee, Employees } from 'backend-data/employees-types'
-import { CardEmployee } from 'components/card-employee/card-employee'
-import { Sidebar } from 'components/sidebar/sidebar'
+import { Employee, Employees } from '@/backend-data/employees-types'
+import { CardEmployee } from '@/components/card-employee/card-employee'
+import { Sidebar } from '@/components/sidebar/sidebar'
 
 import s from './App.module.scss'
 
