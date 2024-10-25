@@ -1,0 +1,59 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+
+  width: 250px;
+  padding: 10px;
+
+  background-color: #c6c6c6;
+}
+
+.filterRoleWrapper {
+  position: relative;
+  width: 180px;
+}
+
+.filterStatusWrapper {
+  display: flex;
+  gap: 10px;
+  align-self: flex-start;
+  padding-left: 15px;
+
+  & input {
+    position: relative;
+    top: 0;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.filterIndicator {
+  pointer-events: auto !important;
+  user-select: none;
+
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-40%);
+
+  width: 15px;
+  height: 15px;
+
+  line-height: 1;
+
+  background-color: #f11e20;
+  border-radius: 50%;
+
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: scale(1.1) translateY(-50%);
+  }
+}
