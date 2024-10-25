@@ -1,4 +1,4 @@
-import { Roles } from '@/App'
+import { Role } from '@/app/app-api.types'
 import { ArrowDownIcon } from '@/assets/arrow-down-icon'
 import { CloseIcon } from '@/assets/close-icon'
 import { Content, Item, Portal, Root, Trigger } from '@radix-ui/react-dropdown-menu'
@@ -6,9 +6,9 @@ import { Content, Item, Portal, Root, Trigger } from '@radix-ui/react-dropdown-m
 import s from './filter-by-role.module.scss'
 
 type SelectProps = {
-  handleCheckboxChange: (role: Roles) => void
-  selectedRoles: Roles[]
-  setSelectedRoles: (selectedRoles: Roles[]) => void
+  handleCheckboxChange: (role: Role) => void
+  selectedRoles: Role[]
+  setSelectedRoles: (selectedRoles: Role[]) => void
 }
 
 export const FilterByRole = ({

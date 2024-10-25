@@ -1,4 +1,4 @@
-import { Employee } from '@/backend-data/employees-types'
+import { Employee } from '@/app/app-api.types'
 
 import s from './card-employee.module.scss'
 

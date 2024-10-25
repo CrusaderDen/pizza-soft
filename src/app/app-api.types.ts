@@ -4,7 +4,7 @@ export type Employee = {
   isArchive: boolean
   name: string
   phone: string
-  role: string
+  role: Role
 }
 
-export type Employees = Employee[]
+export type Role = 'cook' | 'driver' | 'waiter'

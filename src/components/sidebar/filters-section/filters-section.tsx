@@ -1,4 +1,4 @@
-import { Roles } from '@/App'
+import { Role } from '@/App'
 import { FilterByRole } from '@/components/sidebar/filters-section/filter-by-role/filter-by-role'
 
 import s from './filters-section.module.scss'
