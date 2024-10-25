@@ -19,10 +19,10 @@ export const FilterByRole = ({
   return (
     <>
       <Root>
-        <Trigger className={s.selectTrigger}>
-          <div>По должности</div>
-          <div className={s.arrowIcon}>
-            <ArrowDownIcon />
+        <Trigger asChild>
+          <div className={s.selectTrigger}>
+            <div>По должности</div>
+            <ArrowDownIcon className={s.arrowIcon} />
           </div>
         </Trigger>
         <Portal>

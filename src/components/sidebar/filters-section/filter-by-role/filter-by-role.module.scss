@@ -16,9 +16,13 @@
   border-radius: 5px;
 
   & .arrowIcon {
-    width: 10px;
-    height: auto;
+    position: relative;
+    top: 1px;
+
+    width: 8px;
+    height: 5px;
     margin-left: 10px;
+
     transition: transform 0.2s;
   }
 
