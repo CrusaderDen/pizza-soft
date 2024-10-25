@@ -13,7 +13,9 @@ export const CardEmployee = ({ employee }: CardEmployeeProps) => {
       <div className={s.phone}>{employee.phone}</div>
       <div className={s.role}>{employee.role}</div>
       <div className={s.birthday}>{employee.birthday}</div>
-      <div className={s.isArchive}>{employee.isArchive ? 'В архиве' : ''}</div>
+      <div className={employee.isArchive ? s.isArchive : ''}>
+        {employee.isArchive ? 'В архиве' : ''}
+      </div>
     </div>
   )
 }

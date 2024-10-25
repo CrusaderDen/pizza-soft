@@ -1,4 +1,5 @@
 import { Roles } from '@/App'
+import { ArrowDownIcon } from '@/assets/arrow-down-icon'
 import { CloseIcon } from '@/assets/close-icon'
 import { Content, Item, Portal, Root, Trigger } from '@radix-ui/react-dropdown-menu'
 
@@ -20,7 +21,9 @@ export const FilterByRole = ({
       <Root>
         <Trigger className={s.selectTrigger}>
           <div>По должности</div>
-          <div className={s.arrowIcon}>⬇</div>
+          <div className={s.arrowIcon}>
+            <ArrowDownIcon />
+          </div>
         </Trigger>
         <Portal>
           <Content align={'end'} className={s.dropdownContent} side={'bottom'}>
