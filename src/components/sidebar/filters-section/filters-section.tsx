@@ -3,11 +3,21 @@ import { FilterByRole } from '@/components/sidebar/filters-section/filter-by-rol
 
 import s from './filters-section.module.scss'
 
-export const FiltersSection = ({ selectedRoles, setSelectedRoles, setStatusChecked }: any): any => {
+type FiltersSectionProps = {
+  selectedRoles: Role[]
+  setSelectedRoles: (selectedRoles: Role[]) => void
+  setStatusChecked: (checked: boolean) => void
+}
+
+export const FiltersSection = (props: FiltersSectionProps) => {
+  const { selectedRoles, setSelectedRoles, setStatusChecked } = props
+
   const handleCheckboxChange = (role: Role) => {
-    setSelectedRoles((prev: Role[]) =>
-      prev.includes(role) ? prev.filter(r => r !== role) : [...prev, role]
-    )
+    const newSelectedRoles = selectedRoles.includes(role)
+      ? selectedRoles.filter(r => r !== role)
+      : [...selectedRoles, role]
+
+    setSelectedRoles(newSelectedRoles)
   }
 
   const handleStatusChecked = (e: any) => {

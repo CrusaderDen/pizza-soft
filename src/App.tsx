@@ -1,13 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { fetchData } from '@/app/app-api'
-import { Employee, Role } from '@/app/app-api.types'
-import { CardEmployee } from '@/components/card-employee/card-employee'
+import { Role } from '@/app/app-api.types'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { EmployeesTable } from '@/components/employees-table/employees-table'
+import { fetchEmployees } from '@/components/employees-table/employeesSlice'
+import { Loader } from '@/components/loader/loader'
 import { Sidebar } from '@/components/sidebar/sidebar'
 
 import s from './App.module.scss'
 
-type SortVariant =
+export type SortVariant =
   | 'by-date-of-birthday-asc'
   | 'by-date-of-birthday-desc'
   | 'by-name-asc'
@@ -15,17 +17,22 @@ type SortVariant =
   | 'default'
 
 function App() {
+  const dispatch = useAppDispatch()
   const [selectedRoles, setSelectedRoles] = useState<Role[]>([])
   const [statusChecked, setStatusChecked] = useState(false)
   const [sortBy, setSortBy] = useState<SortVariant>('default')
 
-  const [data, setData] = useState<Employee[]>([])
+  const { employees, error, loading } = useAppSelector(state => state.employees)
 
-  fetchData().then(res => {
-    setData(res)
-  })
+  useEffect(() => {
+    dispatch(fetchEmployees())
+  }, [dispatch])
 
-  let employeesForRender = data
+  if (error) {
+    return <div>Error: {error}</div>
+  }
+
+  let employeesForRender = [...employees]
 
   if (selectedRoles.length) {
     employeesForRender = employeesForRender.filter(employee =>
@@ -58,9 +65,7 @@ function App() {
   }
 
   if (sortBy === 'default') {
-    employeesForRender
-      .sort((a, b) => (a.name < b.name ? -1 : 1))
-      .sort((a, b) => (a.role < b.role ? -1 : 1))
+    employeesForRender.sort((a, b) => a.id - b.id)
   }
 
   function parseDate(dateString: string): number {
@@ -69,17 +74,15 @@ function App() {
     return new Date(year, month - 1, day).getTime()
   }
 
-  const renderedEmployees = employeesForRender.map((employee: Employee) => (
-    <CardEmployee employee={employee} key={employee.id} />
-  ))
-
   return (
     <div className={s.appLayout}>
-      {!!employeesForRender.length && <div className={s.employeeTable}> {renderedEmployees}</div>}
+      {loading && <Loader />}
+      {!!employeesForRender.length && (
+        <EmployeesTable employees={employeesForRender} setSortBy={setSortBy} />
+      )}
       <Sidebar
         selectedRoles={selectedRoles}
         setSelectedRoles={setSelectedRoles}
-        setSortBy={setSortBy}
         setStatusChecked={setStatusChecked}
       />
     </div>
