@@ -61,13 +61,17 @@ export const employeesSlice = createSlice({
         const index = state.employees.findIndex(employee => employee.id === action.payload.id)
 
         if (index !== -1) {
-          state.employees[index] = action.payload // Обновляем данные сотрудника
+          state.employees[index] = action.payload
         }
       })
   },
   initialState,
   name: 'employees',
-  reducers: {},
+  reducers: {
+    employeesForRender: (state, action) => {
+      state.employees = action.payload
+    },
+  },
 })
-
+export const { employeesForRender } = employeesSlice.actions
 export default employeesSlice.reducer

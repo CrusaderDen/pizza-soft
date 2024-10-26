@@ -1,81 +1,62 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect } from 'react'
 
-import { SortVariant } from '@/App'
-import { Employee } from '@/app/app-api.types'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { fetchEmployees } from '@/components/employees-table/employeesSlice'
+import { useSort } from '@/components/employees-table/useSort'
+import { Loader } from '@/components/loader/loader'
 import clsx from 'clsx'
 
 import s from './employees-table.module.scss'
 
-type EmployeesTableProps = {
-  employees: Employee[]
-  setSortBy: (sortBy: SortVariant) => void
-}
+export const EmployeesTable = () => {
+  const dispatch = useAppDispatch()
+  const { employees, error, loading } = useAppSelector(state => state.employees)
+  const { birthdaySort, handleBirthdaySort, handleNameSort, nameSort } = useSort(employees)
 
-type SortArrow = '↑' | '↓' | '↕'
+  useEffect(() => {
+    if (employees.length === 0) {
+      dispatch(fetchEmployees())
+    }
+  }, [dispatch])
 
-export const EmployeesTable = ({ employees, setSortBy }: EmployeesTableProps) => {
-  const [nameSort, setNameSort] = useState<SortArrow>('↕')
-  const [birthdaySort, setBirthdaySort] = useState<SortArrow>('↕')
-
-  const handleNameSort = () => {
-    if (nameSort === '↕') {
-      setSortBy('by-name-asc')
-      setNameSort('↓')
-    }
-    if (nameSort === '↓') {
-      setSortBy('by-name-desc')
-      setNameSort('↑')
-    }
-    if (nameSort === '↑') {
-      setSortBy('default')
-      setNameSort('↕')
-    }
-  }
-
-  const handleBirthdaySort = () => {
-    if (birthdaySort === '↕') {
-      setSortBy('by-date-of-birthday-asc')
-      setBirthdaySort('↓')
-    }
-    if (birthdaySort === '↓') {
-      setSortBy('by-date-of-birthday-desc')
-      setBirthdaySort('↑')
-    }
-    if (birthdaySort === '↑') {
-      setSortBy('default')
-      setBirthdaySort('↕')
-    }
+  if (error) {
+    return <div>Error: {error}</div>
   }
 
   return (
-    <div className={s.gridTable}>
-      <div className={s.gridHeader}>
-        <span>Имя</span>
-        <button className={s.sortBtn} onClick={handleNameSort} type={'button'}>
-          {nameSort}
-        </button>
-      </div>
-      <div className={s.gridHeader}>Телефон</div>
-      <div className={s.gridHeader}>Роль</div>
-      <div className={s.gridHeader}>
-        <span> Дата рождения</span>
-        <button className={s.sortBtn} onClick={handleBirthdaySort} type={'button'}>
-          {birthdaySort}
-        </button>
-      </div>
-      <div className={s.gridHeader}>Архив</div>
+    <>
+      {loading && <Loader />}
+      {!!employees.length && (
+        <div className={s.gridTable}>
+          <div className={s.gridHeader}>
+            <span>Имя</span>
+            <button className={s.sortBtn} onClick={handleNameSort} type={'button'}>
+              {nameSort}
+            </button>
+          </div>
+          <div className={s.gridHeader}>Телефон</div>
+          <div className={s.gridHeader}>Роль</div>
+          <div className={s.gridHeader}>
+            <span> Дата рождения</span>
+            <button className={s.sortBtn} onClick={handleBirthdaySort} type={'button'}>
+              {birthdaySort}
+            </button>
+          </div>
+          <div className={s.gridHeader}>Архив</div>
 
-      {employees.map(employee => {
-        return (
-          <Fragment key={employee.id}>
-            <div className={clsx(s.gridCell, s.name)}>{employee.name}</div>
-            <div className={s.gridCell}>{employee.phone}</div>
-            <div className={s.gridCell}>{employee.role}</div>
-            <div className={s.gridCell}>{employee.birthday}</div>
-            <div className={s.gridCell}> {employee.isArchive ? 'В архиве' : ''}</div>
-          </Fragment>
-        )
-      })}
-    </div>
+          {employees.map(employee => {
+            return (
+              <Fragment key={employee.id}>
+                <div className={clsx(s.gridCell, s.name)}>{employee.name}</div>
+                <div className={s.gridCell}>{employee.phone}</div>
+                <div className={s.gridCell}>{employee.role}</div>
+                <div className={s.gridCell}>{employee.birthday}</div>
+                <div className={s.gridCell}> {employee.isArchive ? 'В архиве' : ''}</div>
+              </Fragment>
+            )
+          })}
+        </div>
+      )}
+    </>
   )
 }

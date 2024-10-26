@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 import { Role } from '@/app/app-api.types'
 import { FiltersSection } from '@/components/sidebar/filters-section/filters-section'
 
@@ -18,6 +20,7 @@ export const Sidebar = ({ selectedRoles, setSelectedRoles, setStatusChecked }: S
         setSelectedRoles={setSelectedRoles}
         setStatusChecked={setStatusChecked}
       />
+      <Link to={'/create-employee'}>Create Employee</Link>
     </div>
   )
 }
