@@ -1,16 +1,18 @@
+import { useState } from 'react'
+
 import { Role } from '@/app/app-api.types'
+import { useAppDispatch } from '@/app/hooks'
+import {
+  setSelectedEmployeesRole,
+  setSelectedEmployeesStatus,
+} from '@/components/employees-table/employeesSlice'
 import { FilterByRole } from '@/components/sidebar/filters-section/filter-by-role/filter-by-role'
 
 import s from './filters-section.module.scss'
 
-type FiltersSectionProps = {
-  selectedRoles: Role[]
-  setSelectedRoles: (selectedRoles: Role[]) => void
-  setStatusChecked: (checked: boolean) => void
-}
-
-export const FiltersSection = (props: FiltersSectionProps) => {
-  const { selectedRoles, setSelectedRoles, setStatusChecked } = props
+export const FiltersSection = () => {
+  const dispatch = useAppDispatch()
+  const [selectedRoles, setSelectedRoles] = useState<Role[]>([])
 
   const handleCheckboxChange = (role: Role) => {
     const newSelectedRoles = selectedRoles.includes(role)
@@ -18,10 +20,13 @@ export const FiltersSection = (props: FiltersSectionProps) => {
       : [...selectedRoles, role]
 
     setSelectedRoles(newSelectedRoles)
+    dispatch(setSelectedEmployeesRole(newSelectedRoles))
   }
 
   const handleStatusChecked = (e: any) => {
-    setStatusChecked(e.currentTarget.checked)
+    const isChecked = e.currentTarget.checked
+
+    dispatch(setSelectedEmployeesStatus(isChecked))
   }
 
   return (

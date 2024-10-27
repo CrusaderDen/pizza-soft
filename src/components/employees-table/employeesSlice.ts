@@ -6,12 +6,16 @@ type EmployeeState = {
   employees: Employee[]
   error: null | string
   loading: boolean
+  selectedEmployeesRole: string[]
+  selectedEmployeesStatus: boolean
 }
 
 const initialState: EmployeeState = {
   employees: [],
   error: null,
   loading: false,
+  selectedEmployeesRole: [],
+  selectedEmployeesStatus: false,
 }
 
 //получаем сотрудников, здесь был бы GET-запрос
@@ -71,7 +75,14 @@ export const employeesSlice = createSlice({
     employeesForRender: (state, action) => {
       state.employees = action.payload
     },
+    setSelectedEmployeesRole: (state, action) => {
+      state.selectedEmployeesRole = action.payload
+    },
+    setSelectedEmployeesStatus: (state, action) => {
+      state.selectedEmployeesStatus = action.payload
+    },
   },
 })
-export const { employeesForRender } = employeesSlice.actions
+export const { employeesForRender, setSelectedEmployeesRole, setSelectedEmployeesStatus } =
+  employeesSlice.actions
 export default employeesSlice.reducer

@@ -1,5 +1,6 @@
 import { Fragment, useEffect } from 'react'
 
+import { Role } from '@/app/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { fetchEmployees } from '@/components/employees-table/employeesSlice'
 import { useSort } from '@/components/employees-table/useSort'
@@ -10,7 +11,8 @@ import s from './employees-table.module.scss'
 
 export const EmployeesTable = () => {
   const dispatch = useAppDispatch()
-  const { employees, error, loading } = useAppSelector(state => state.employees)
+  const { employees, error, loading, selectedEmployeesRole, selectedEmployeesStatus } =
+    useAppSelector(state => state.employees)
   const { birthdaySort, handleBirthdaySort, handleNameSort, nameSort } = useSort(employees)
 
   useEffect(() => {
@@ -21,6 +23,18 @@ export const EmployeesTable = () => {
 
   if (error) {
     return <div>Error: {error}</div>
+  }
+
+  let filteredEmployees = employees
+
+  if (selectedEmployeesRole.length) {
+    filteredEmployees = filteredEmployees.filter(employee =>
+      selectedEmployeesRole.includes(employee.role as Role)
+    )
+  }
+
+  if (selectedEmployeesStatus) {
+    filteredEmployees = filteredEmployees.filter(employee => employee.isArchive)
   }
 
   return (
@@ -44,7 +58,7 @@ export const EmployeesTable = () => {
           </div>
           <div className={s.gridHeader}>Архив</div>
 
-          {employees.map(employee => {
+          {filteredEmployees.map(employee => {
             return (
               <Fragment key={employee.id}>
                 <div className={clsx(s.gridCell, s.name)}>{employee.name}</div>
