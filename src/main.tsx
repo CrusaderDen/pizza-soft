@@ -5,21 +5,29 @@ import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from '@/App'
 import { store } from '@/app/store'
 import { CreateEmployee } from '@/components/create-employee/create-employee'
+import { EmployeesTable } from '@/components/employees-table/employees-table'
 import { createRoot } from 'react-dom/client'
 
 import './index.css'
 
 const router = createBrowserRouter([
   {
+    children: [
+      {
+        element: <CreateEmployee />,
+        path: '/create-employee',
+      },
+      {
+        element: <EmployeesTable />,
+        path: '/employees-table',
+      },
+    ],
     element: <App />,
-    path: '/employees',
+    path: '/',
   },
+
   {
-    element: <CreateEmployee />,
-    path: '/create-employee',
-  },
-  {
-    element: <Navigate to={'/employees'} />, // Перенаправление на /employees для всех остальных путей
+    element: <Navigate to={'/employees'} />,
     path: '*',
   },
 ])

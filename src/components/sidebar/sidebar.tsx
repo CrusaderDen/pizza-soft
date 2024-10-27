@@ -8,8 +8,9 @@ export const Sidebar = () => {
   return (
     <div className={s.sidebar}>
       <div style={{ alignSelf: 'center', fontSize: '24px', fontWeight: '700' }}>Pizza-soft</div>
-      <FiltersSection />
+      <Link to={'/employees-table'}>Employees table</Link>
       <Link to={'/create-employee'}>Create Employee</Link>
+      <FiltersSection />
     </div>
   )
 }

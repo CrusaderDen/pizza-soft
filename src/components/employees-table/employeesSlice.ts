@@ -1,12 +1,12 @@
 import { fetchData } from '@/app/app-api'
-import { Employee } from '@/app/app-api.types'
+import { Employee, Role } from '@/app/app-api.types'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 type EmployeeState = {
   employees: Employee[]
   error: null | string
   loading: boolean
-  selectedEmployeesRole: string[]
+  selectedEmployeesRole: Role[]
   selectedEmployeesStatus: boolean
 }
 

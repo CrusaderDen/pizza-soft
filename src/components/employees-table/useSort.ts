@@ -16,6 +16,7 @@ export const useSort = (employees: Employee[]) => {
     return new Date(year, month - 1, day).getTime()
   }
   const handleNameSort = () => {
+    setBirthdaySort('↕')
     if (nameSort === '↕') {
       const sorted = [...employees].sort((a, b) => (a.name < b.name ? -1 : 1))
 
@@ -37,6 +38,7 @@ export const useSort = (employees: Employee[]) => {
   }
 
   const handleBirthdaySort = () => {
+    setNameSort('↕')
     if (birthdaySort === '↕') {
       const sorted = [...employees].sort((a, b) => parseDate(a.birthday) - parseDate(b.birthday))
 

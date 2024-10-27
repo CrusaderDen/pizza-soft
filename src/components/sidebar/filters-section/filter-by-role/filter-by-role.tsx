@@ -1,21 +1,15 @@
 import { Role } from '@/app/app-api.types'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ArrowDownIcon } from '@/assets/arrow-down-icon'
 import { CloseIcon } from '@/assets/close-icon'
+import { setSelectedEmployeesRole } from '@/components/employees-table/employeesSlice'
 import { Content, Item, Portal, Root, Trigger } from '@radix-ui/react-dropdown-menu'
 
 import s from './filter-by-role.module.scss'
 
-type SelectProps = {
-  handleCheckboxChange: (role: Role) => void
-  selectedRoles: Role[]
-  setSelectedRoles: (selectedRoles: Role[]) => void
-}
+export const FilterByRole = () => {
+  const { selectedEmployeesRole } = useAppSelector(state => state.employees)
 
-export const FilterByRole = ({
-  handleCheckboxChange,
-  selectedRoles,
-  setSelectedRoles,
-}: SelectProps) => {
   return (
     <>
       <Root>
@@ -27,52 +21,67 @@ export const FilterByRole = ({
         </Trigger>
         <Portal>
           <Content align={'end'} className={s.dropdownContent} side={'bottom'}>
-            <Item asChild className={s.dropdownItem} onSelect={event => event.preventDefault()}>
-              <div>
-                <input
-                  checked={selectedRoles.includes('waiter')}
-                  className={s.dropdownItem__input}
-                  id={'waiter'}
-                  onChange={() => handleCheckboxChange('waiter')}
-                  type={'checkbox'}
-                />
-                <label htmlFor={'waiter'}>Официанты</label>
-              </div>
-            </Item>
-            <Item asChild className={s.dropdownItem} onSelect={event => event.preventDefault()}>
-              <div>
-                <input
-                  checked={selectedRoles.includes('driver')}
-                  className={s.dropdownItem__input}
-                  id={'driver'}
-                  onChange={() => handleCheckboxChange('driver')}
-                  type={'checkbox'}
-                />
-                <label htmlFor={'driver'}>Водители</label>
-              </div>
-            </Item>
-            <Item asChild className={s.dropdownItem} onSelect={event => event.preventDefault()}>
-              <div>
-                <input
-                  checked={selectedRoles.includes('cook')}
-                  className={s.dropdownItem__input}
-                  id={'cook'}
-                  onChange={() => handleCheckboxChange('cook')}
-                  type={'checkbox'}
-                />
-                <label htmlFor={'cook'}>Повара</label>
-              </div>
-            </Item>
+            <FilterItem itemRole={'waiter'} selectedEmployeesRole={selectedEmployeesRole} />
+            <FilterItem itemRole={'driver'} selectedEmployeesRole={selectedEmployeesRole} />
+            <FilterItem itemRole={'cook'} selectedEmployeesRole={selectedEmployeesRole} />
           </Content>
         </Portal>
       </Root>
-      {!!selectedRoles.length && <SelectClearBtn setSelectedRoles={setSelectedRoles} />}
+      {!!selectedEmployeesRole.length && <SelectClearBtn />}
     </>
   )
 }
 
-const SelectClearBtn = ({ setSelectedRoles }: any) => {
-  const handleClearFilter = () => setSelectedRoles([])
+type FilterItemProps = {
+  itemRole: Role
+  selectedEmployeesRole: Role[]
+}
+
+const FilterItem = ({ itemRole, selectedEmployeesRole }: FilterItemProps) => {
+  const dispatch = useAppDispatch()
+  const handleChangeSelectedRoles = (role: Role) => {
+    const newSelectedRoles = selectedEmployeesRole.includes(role)
+      ? selectedEmployeesRole.filter(r => r !== role)
+      : [...selectedEmployeesRole, role]
+
+    dispatch(setSelectedEmployeesRole(newSelectedRoles))
+  }
+
+  let itemLabel = ''
+
+  switch (itemRole) {
+    case 'waiter':
+      itemLabel = 'Официанты'
+      break
+    case 'driver':
+      itemLabel = 'Водители'
+      break
+    case 'cook':
+      itemLabel = 'Повара'
+      break
+    default:
+      console.log('Error with employees filter item label')
+  }
+
+  return (
+    <Item asChild className={s.dropdownItem} onSelect={event => event.preventDefault()}>
+      <div>
+        <input
+          checked={selectedEmployeesRole.includes(itemRole)}
+          className={s.dropdownItem__input}
+          id={itemRole}
+          onChange={() => handleChangeSelectedRoles(itemRole)}
+          type={'checkbox'}
+        />
+        <label htmlFor={itemRole}>{itemLabel}</label>
+      </div>
+    </Item>
+  )
+}
+
+const SelectClearBtn = () => {
+  const dispatch = useAppDispatch()
+  const handleClearFilter = () => dispatch(setSelectedEmployeesRole([]))
 
   return (
     <button className={s.filterIndicator} onClick={handleClearFilter} type={'button'}>
