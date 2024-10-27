@@ -15,3 +15,35 @@
   background-color: #c6c6c6;
 }
 
+
+.title {
+  align-self: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.linksWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.link {
+  position: relative;
+  font-weight: 500;
+  color: #000;
+}
+
+.linkIsActive {
+  &::before {
+    content: '➤';
+
+    position: absolute;
+    top: 50%;
+    left: -25px;
+    transform: translateY(-50%);
+
+    line-height: 0;
+
+  }
+}

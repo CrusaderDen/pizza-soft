@@ -26,10 +26,10 @@
     //    "types": [
     //      "node"
     //    ],
-    //    "baseUrl": "src",
+    "baseUrl": "src",
     "paths": {
       "@/*": [
-        "./src/*"
+        "*"
       ]
     }
   },

@@ -84,7 +84,8 @@ input::-ms-clear {
 }
 
 button,
-input[type='submit'] {
+input[type='submit'],
+input[type='checkbox'] {
     cursor: pointer;
     display: inline-block;
     background: transparent none;

@@ -28,7 +28,7 @@ export const fetchEmployees = createAsyncThunk('employees/fetchEmployees', async
 //Создаем нового сотрудника, здесь был бы POST-запрос
 export const addEmployee = createAsyncThunk(
   'employees/addEmployee',
-  async (newEmployee: Employee) => {
+  async (newEmployee: Omit<Employee, 'id' & 'isArchive'>) => {
     return newEmployee
   }
 )
@@ -59,7 +59,11 @@ export const employeesSlice = createSlice({
         state.error = action.error.message || 'Failed to fetch employees'
       })
       .addCase(addEmployee.fulfilled, (state, action) => {
-        state.employees.push(action.payload)
+        state.employees.push({
+          ...action.payload,
+          id: state.employees.length + 1,
+          isArchive: false,
+        })
       })
       .addCase(updateEmployee.fulfilled, (state, action) => {
         const index = state.employees.findIndex(employee => employee.id === action.payload.id)

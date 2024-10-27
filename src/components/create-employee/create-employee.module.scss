@@ -1,0 +1,30 @@
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  height: 100vh;
+}
+
+.input {
+  width: 300px;
+  margin-left: 10px;
+  border: 1px solid #000;
+}
+
+.button {
+  border: 1px solid #000;
+
+  &:disabled {
+    color: #bcbcbc;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
