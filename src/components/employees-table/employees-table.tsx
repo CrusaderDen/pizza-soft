@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react'
 
 import { Role } from '@/app/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
+import { notifyError, notifySuccess } from '@/app/toastConfig'
 import { EditDialog } from '@/components/employees-table/edit-dialog/edit-dialog'
 import { deleteEmployee, fetchEmployees } from '@/components/employees-table/employeesSlice'
 import { useSort } from '@/components/employees-table/useSort'
@@ -42,7 +43,12 @@ export const EmployeesTable = () => {
     const confirmation = confirm('Подтвердите удаление сотрудника из базы')
 
     if (confirmation) {
-      await dispatch(deleteEmployee(id))
+      try {
+        await dispatch(deleteEmployee(id))
+        notifySuccess('Сотрудник успешно удалён из базы')
+      } catch (e) {
+        notifyError(`Ошибка ${e}. Попробуйте позже или обратитесь в поддержку. `)
+      }
     }
   }
 

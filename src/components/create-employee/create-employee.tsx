@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { Employee } from '@/app/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { PATHS } from '@/app/paths'
+import { notifyError, notifySuccess } from '@/app/toastConfig'
 import { addEmployee } from '@/components/employees-table/employeesSlice'
 import clsx from 'clsx'
 
@@ -51,12 +52,19 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
     setIsButtonDisabled(true)
     try {
       await dispatch(dispatchVariant({ ...data, id }))
+      notifySuccess(
+        setOpen
+          ? 'Данные сотрудника успешно изменены'
+          : 'Новый сотрудник сохранён в базу. Продолжайте заведение, или нажмите "отмена"'
+      )
     } catch (e) {
+      notifyError(`Ошибка ${e}. Попробуйте позже или обратитесь в поддержку. `)
       console.log(e)
     } finally {
       reset()
       setOpen && setOpen(false)
       setTimeout(() => {
+        // блокировка кнопки на имитационное время выполнения запроса
         setIsButtonDisabled(false)
       }, 300)
     }
