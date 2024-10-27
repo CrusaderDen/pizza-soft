@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { useAppDispatch } from '@/app/hooks'
+import { PATHS } from '@/app/paths'
 import { addEmployee } from '@/components/employees-table/employeesSlice'
+import clsx from 'clsx'
 
 import s from './create-employee.module.scss'
 
@@ -14,7 +16,6 @@ export const CreateEmployee = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   const onSubmit = async (data: any) => {
-    console.log(data)
     setIsButtonDisabled(true)
     try {
       await dispatch(addEmployee(data))
@@ -30,23 +31,41 @@ export const CreateEmployee = () => {
 
   const handleEscape = () => {
     reset()
-    navigate('/new-path')
+    navigate(PATHS.TABLE)
   }
 
   return (
     <div className={s.wrapper}>
-      Добавить сотрудника
+      <span className={s.title}>Добавить сотрудника</span>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput label={'Имя'} {...register('name', { maxLength: 30, required: true })} />
-        <FormInput label={'Телефон'} {...register('phone', { required: true })} />
-        <FormInput label={'Должность'} {...register('role', { required: true })} />
-        <FormInput label={'Дата рождения'} {...register('birthday', { required: true })} />
-        <FormButton disabled={isButtonDisabled} type={'submit'}>
-          Создать
-        </FormButton>
-        <FormButton onClick={handleEscape} type={'button'}>
-          Отмена
-        </FormButton>
+        <FormInput
+          className={s.formInput}
+          label={'Имя'}
+          {...register('name', { maxLength: 30, required: true })}
+        />
+        <FormInput
+          className={s.formInput}
+          label={'Телефон'}
+          {...register('phone', { required: true })}
+        />
+        <FormInput
+          className={s.formInput}
+          label={'Должность'}
+          {...register('role', { required: true })}
+        />
+        <FormInput
+          className={s.formInput}
+          label={'Дата рождения'}
+          {...register('birthday', { required: true })}
+        />
+        <div className={s.buttonWrapper}>
+          <FormButton disabled={isButtonDisabled} type={'submit'}>
+            Создать
+          </FormButton>
+          <FormButton onClick={handleEscape} type={'button'}>
+            Отмена
+          </FormButton>
+        </div>
       </form>
     </div>
   )
@@ -65,7 +84,9 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
 
     return (
       <div className={className}>
-        <label htmlFor={id}>{label}</label>
+        <label className={s.label} htmlFor={id}>
+          {label}
+        </label>
         <input
           className={s.input}
           id={id}
@@ -88,10 +109,8 @@ type FormButtonProps = {
 
 const FormButton = ({ children, className, disabled, onClick, type }: FormButtonProps) => {
   return (
-    <div className={className}>
-      <button className={s.button} disabled={disabled} onClick={onClick} type={type}>
-        {children}
-      </button>
-    </div>
+    <button className={clsx(s.button, className)} disabled={disabled} onClick={onClick} type={type}>
+      {children}
+    </button>
   )
 }
