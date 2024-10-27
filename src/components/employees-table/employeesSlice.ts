@@ -28,7 +28,7 @@ export const fetchEmployees = createAsyncThunk('employees/fetchEmployees', async
 //Создаем нового сотрудника, здесь был бы POST-запрос
 export const addEmployee = createAsyncThunk(
   'employees/addEmployee',
-  async (newEmployee: Omit<Employee, 'id' & 'isArchive'>) => {
+  async (newEmployee: Omit<Employee, 'id'>) => {
     return newEmployee
   }
 )
@@ -41,7 +41,10 @@ export const updateEmployee = createAsyncThunk(
   }
 )
 
-//Удалять сотрудников не будем, видимо, они просто помечаются "в архиве"
+//Редактирование данных сотрудника, здесь был бы DELETE-запрос
+export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async (id: number) => {
+  return id
+})
 
 export const employeesSlice = createSlice({
   extraReducers: builder => {
@@ -62,7 +65,6 @@ export const employeesSlice = createSlice({
         state.employees.push({
           ...action.payload,
           id: state.employees.length + 1,
-          isArchive: false,
         })
       })
       .addCase(updateEmployee.fulfilled, (state, action) => {
@@ -70,6 +72,13 @@ export const employeesSlice = createSlice({
 
         if (index !== -1) {
           state.employees[index] = action.payload
+        }
+      })
+      .addCase(deleteEmployee.fulfilled, (state, action) => {
+        const index = state.employees.findIndex(employee => employee.id === action.payload)
+
+        if (index !== -1) {
+          state.employees.splice(index, 1)
         }
       })
   },

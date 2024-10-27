@@ -15,6 +15,7 @@
   margin-bottom: 20px;
   font-size: 18px;
   font-weight: 700;
+  text-align: center;
 }
 
 .form {
@@ -38,6 +39,17 @@
   flex-direction: column;
   width: 100%;
   margin-bottom: 15px;
+}
+
+.formCheckbox {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 10px;
+
+  & label {
+    position: relative;
+    top: 2px;
+  }
 }
 
 .label {
@@ -88,6 +100,10 @@
     &:hover {
       background-color: #218838;
     }
+
+    &:focus {
+      background-color: #165c26;
+    }
   }
 
   &[type='button'] {
@@ -96,6 +112,10 @@
 
     &:hover {
       background-color: #c82333;
+    }
+
+    &:focus {
+      background-color: #8e1a25;
     }
   }
 }

@@ -2,7 +2,8 @@ import { ComponentPropsWithoutRef, forwardRef, useId, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch } from '@/app/hooks'
+import { Employee } from '@/app/app-api.types'
+import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { PATHS } from '@/app/paths'
 import { addEmployee } from '@/components/employees-table/employeesSlice'
 import clsx from 'clsx'
@@ -10,19 +11,51 @@ import clsx from 'clsx'
 import s from './create-employee.module.scss'
 
 export const CreateEmployee = () => {
+  return (
+    <div className={s.wrapper}>
+      <EmployeeForm dispatchVariant={addEmployee} typeForm={'create-employee'} />
+    </div>
+  )
+}
+
+type EmployeeFormProps = {
+  dispatchVariant: any
+  id?: number
+  setOpen?: (open: boolean) => void
+  typeForm: 'create-employee' | 'edit-form'
+}
+
+export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: EmployeeFormProps) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const { handleSubmit, register, reset } = useForm()
+  const { employees } = useAppSelector(state => state.employees)
+
+  const { handleSubmit, register, reset, setValue } = useForm()
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+
+  function filterById(employees: Employee[], id: number): Employee | undefined {
+    return employees.find(employee => employee.id === id)
+  }
+
+  if (id) {
+    const employee = filterById(employees, id)
+
+    setValue('name', employee?.name)
+    setValue('role', employee?.role)
+    setValue('birthday', employee?.birthday)
+    setValue('phone', employee?.phone)
+    setValue('isArchive', employee?.isArchive)
+  }
 
   const onSubmit = async (data: any) => {
     setIsButtonDisabled(true)
     try {
-      await dispatch(addEmployee(data))
+      await dispatch(dispatchVariant({ ...data, id }))
     } catch (e) {
       console.log(e)
     } finally {
       reset()
+      setOpen && setOpen(false)
       setTimeout(() => {
         setIsButtonDisabled(false)
       }, 300)
@@ -30,44 +63,54 @@ export const CreateEmployee = () => {
   }
 
   const handleEscape = () => {
-    reset()
-    navigate(PATHS.TABLE)
+    if (setOpen) {
+      setOpen(false)
+    } else {
+      reset()
+      navigate(PATHS.TABLE)
+    }
   }
 
   return (
-    <div className={s.wrapper}>
-      <span className={s.title}>Добавить сотрудника</span>
-      <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput
-          className={s.formInput}
-          label={'Имя'}
-          {...register('name', { maxLength: 30, required: true })}
-        />
-        <FormInput
-          className={s.formInput}
-          label={'Телефон'}
-          {...register('phone', { required: true })}
-        />
-        <FormInput
-          className={s.formInput}
-          label={'Должность'}
-          {...register('role', { required: true })}
-        />
-        <FormInput
-          className={s.formInput}
-          label={'Дата рождения'}
-          {...register('birthday', { required: true })}
-        />
-        <div className={s.buttonWrapper}>
-          <FormButton disabled={isButtonDisabled} type={'submit'}>
-            Создать
-          </FormButton>
-          <FormButton onClick={handleEscape} type={'button'}>
-            Отмена
-          </FormButton>
-        </div>
-      </form>
-    </div>
+    <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
+      <span className={s.title}>
+        {typeForm === 'create-employee' ? 'Добавить сотрудника' : 'Редактировать'}
+      </span>
+      <FormInput
+        className={s.formInput}
+        label={'Имя'}
+        {...register('name', { maxLength: 30, required: true })}
+      />
+      <FormInput
+        className={s.formInput}
+        label={'Телефон'}
+        {...register('phone', { required: true })}
+      />
+      <FormInput
+        className={s.formInput}
+        label={'Должность'}
+        {...register('role', { required: true })}
+      />
+      <FormInput
+        className={s.formInput}
+        label={'Дата рождения'}
+        {...register('birthday', { required: true })}
+      />{' '}
+      <FormInput
+        className={s.formCheckbox}
+        label={'Архив'}
+        {...register('isArchive')}
+        type={'checkbox'}
+      />
+      <div className={s.buttonWrapper}>
+        <FormButton disabled={isButtonDisabled} type={'submit'}>
+          {typeForm === 'create-employee' ? 'Создать' : 'Сохранить изменения'}
+        </FormButton>
+        <FormButton onClick={handleEscape} type={'button'}>
+          Отмена
+        </FormButton>
+      </div>
+    </form>
   )
 }
 
@@ -76,10 +119,11 @@ type FormInputProps = {
   errorMsg?: string
   label: string
   placeholder?: string
+  type?: string
 } & ComponentPropsWithoutRef<'input'>
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
-  ({ className, label, name, placeholder, ...rest }, ref) => {
+  ({ className, label, name, placeholder, type = 'text', ...rest }, ref) => {
     const id = useId()
 
     return (
@@ -93,7 +137,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           name={name}
           placeholder={placeholder}
           ref={ref}
-          type={'text'}
+          type={type}
           {...rest}
         />
       </div>

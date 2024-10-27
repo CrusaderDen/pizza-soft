@@ -2,7 +2,8 @@ import { Fragment, useEffect } from 'react'
 
 import { Role } from '@/app/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { fetchEmployees } from '@/components/employees-table/employeesSlice'
+import { EditDialog } from '@/components/employees-table/edit-dialog/edit-dialog'
+import { deleteEmployee, fetchEmployees } from '@/components/employees-table/employeesSlice'
 import { useSort } from '@/components/employees-table/useSort'
 import { Loader } from '@/components/loader/loader'
 import clsx from 'clsx'
@@ -37,11 +38,21 @@ export const EmployeesTable = () => {
     filteredEmployees = filteredEmployees.filter(employee => employee.isArchive)
   }
 
+  const handleRemoveEmployee = async (id: number) => {
+    const confirmation = confirm('Подтвердите удаление сотрудника из базы')
+
+    if (confirmation) {
+      await dispatch(deleteEmployee(id))
+    }
+  }
+
   return (
     <>
       {loading && <Loader />}
       {!!employees.length && (
         <div className={s.gridTable}>
+          <div className={s.gridCell}></div>
+          <div className={s.gridCell}></div>
           <div className={s.gridHeader}>
             <span>Имя</span>
             <button className={s.sortBtn} onClick={handleNameSort} type={'button'}>
@@ -61,6 +72,12 @@ export const EmployeesTable = () => {
           {filteredEmployees.map(employee => {
             return (
               <Fragment key={employee.id}>
+                <div className={s.gridCell}>
+                  <button onClick={() => handleRemoveEmployee(employee.id)}>🗑️</button>
+                </div>
+                <div className={s.gridCell}>
+                  <EditDialog id={employee.id} />
+                </div>
                 <div className={clsx(s.gridCell, s.name)}>{employee.name}</div>
                 <div className={s.gridCell}>{employee.phone}</div>
                 <div className={s.gridCell}>{employee.role}</div>
