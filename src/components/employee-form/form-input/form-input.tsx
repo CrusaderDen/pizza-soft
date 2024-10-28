@@ -38,6 +38,10 @@ export const FormInput = (props: FormInputProps) => {
           className={s.input}
           id={id}
           name={name}
+          onBlur={onBlur}
+          onChange={e => {
+            onChange(e.target.value)
+          }}
           ref={ref as Ref<HTMLSelectElement>}
           {...rest}
         >
@@ -48,27 +52,27 @@ export const FormInput = (props: FormInputProps) => {
         </select>
       </div>
     )
+  } else {
+    return (
+      <div className={className}>
+        <label className={s.label} htmlFor={id}>
+          {label}
+        </label>
+        <InputMask
+          className={s.input}
+          id={id}
+          mask={mask}
+          name={name}
+          onBlur={onBlur}
+          onChange={onChange}
+          placeholder={placeholder}
+          ref={ref}
+          type={type}
+          value={value}
+          {...rest}
+        ></InputMask>
+        {error && <span style={{ color: 'red' }}>{error.message}</span>}
+      </div>
+    )
   }
-
-  return (
-    <div className={className}>
-      <label className={s.label} htmlFor={id}>
-        {label}
-      </label>
-      <InputMask
-        className={s.input}
-        id={id}
-        mask={mask}
-        name={name}
-        onBlur={onBlur}
-        onChange={onChange}
-        placeholder={placeholder}
-        ref={ref}
-        type={type}
-        value={value}
-        {...rest}
-      ></InputMask>
-      {error && <span style={{ color: 'red' }}>{error.message}</span>}
-    </div>
-  )
 }

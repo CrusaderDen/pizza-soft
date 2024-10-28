@@ -41,6 +41,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   }
 
   const onSubmit = async (data: any) => {
+    console.log(data)
     setIsButtonDisabled(true)
     try {
       await dispatch(dispatchVariant({ ...data, id }))
