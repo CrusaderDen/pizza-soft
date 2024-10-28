@@ -1,5 +1,5 @@
+import { setSelectedEmployeesStatus } from '@/app/app-slice'
 import { useAppDispatch } from '@/app/hooks'
-import { setSelectedEmployeesStatus } from '@/components/employee-form/employees-form-slice'
 import { FilterByRole } from '@/layouts/sidebar/filters/filter-by-role/filter-by-role'
 
 import s from './filters-section.module.scss'

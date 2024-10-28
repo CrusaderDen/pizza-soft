@@ -1,4 +1,4 @@
-import employeesReducer from '@/components/employee-form/employees-form-slice'
+import employeesReducer from '@/app/app-slice'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({

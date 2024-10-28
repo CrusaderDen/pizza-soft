@@ -1,9 +1,9 @@
 import { Fragment, useEffect } from 'react'
 
 import { Role } from '@/api/app-api.types'
+import { deleteEmployee, fetchEmployees } from '@/app/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { notifyError, notifySuccess } from '@/common/toastConfig'
-import { deleteEmployee, fetchEmployees } from '@/components/employee-form/employees-form-slice'
 import { Loader } from '@/components/loader/loader'
 import { EditEmployeeDialog } from '@/features/edit-employee-dialog/edit-employee-dialog'
 import { useSort } from '@/features/employees-table/hooks/useSort'
@@ -57,13 +57,15 @@ export const EmployeesTable = () => {
       {loading && <Loader />}
       {!!employees.length && (
         <div className={s.gridTable}>
-          <div className={s.gridCell}></div>
-          <div className={s.gridCell}></div>
+          <div className={s.gridHeader}></div>
+          <div className={s.gridHeader}></div>
           <div className={s.gridHeader}>
-            <span>Имя</span>
-            <button className={s.sortBtn} onClick={handleNameSort} type={'button'}>
-              {nameSort}
-            </button>
+            <div>
+              <span>Имя</span>
+              <button className={s.sortBtn} onClick={handleNameSort} type={'button'}>
+                {nameSort}
+              </button>
+            </div>
           </div>
           <div className={s.gridHeader}>Телефон</div>
           <div className={s.gridHeader}>Роль</div>

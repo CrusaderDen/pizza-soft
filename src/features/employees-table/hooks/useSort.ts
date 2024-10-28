@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import { Employee } from '@/api/app-api.types'
+import { employeesForRender } from '@/app/app-slice'
 import { useAppDispatch } from '@/app/hooks'
-import { employeesForRender } from '@/components/employee-form/employees-form-slice'
 
 type SortArrow = '↑' | '↓' | '↕'
 

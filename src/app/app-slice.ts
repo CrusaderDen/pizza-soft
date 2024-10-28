@@ -50,7 +50,7 @@ export const deleteEmployee = createAppAsyncThunk(
   }
 )
 
-export const employeesFormSlice = createSlice({
+export const appSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchEmployees.pending, state => {
@@ -68,7 +68,7 @@ export const employeesFormSlice = createSlice({
       .addCase(addEmployee.fulfilled, (state, action) => {
         state.employees.push({
           ...action.payload,
-          id: state.employees.length + 1,
+          id: Date.now(),
         })
       })
       .addCase(updateEmployee.fulfilled, (state, action) => {
@@ -101,6 +101,6 @@ export const employeesFormSlice = createSlice({
   },
 })
 export const { employeesForRender, setSelectedEmployeesRole, setSelectedEmployeesStatus } =
-  employeesFormSlice.actions
+  appSlice.actions
 
-export default employeesFormSlice.reducer
+export default appSlice.reducer
