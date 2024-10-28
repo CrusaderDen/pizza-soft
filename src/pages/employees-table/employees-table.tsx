@@ -3,10 +3,10 @@ import { Fragment, useEffect } from 'react'
 import { Role } from '@/api/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { notifyError, notifySuccess } from '@/common/toastConfig'
-import { EditDialog } from '@/components/employees-table/edit-dialog/edit-dialog'
-import { deleteEmployee, fetchEmployees } from '@/components/employees-table/employees-slice'
-import { useSort } from '@/components/employees-table/useSort'
 import { Loader } from '@/components/loader/loader'
+import { EditEmployeeDialog } from '@/features/edit-employee-dialog/edit-employee-dialog'
+import { deleteEmployee, fetchEmployees } from '@/pages/employees-table/employees-slice'
+import { useSort } from '@/pages/employees-table/hooks/useSort'
 import clsx from 'clsx'
 
 import s from './employees-table.module.scss'
@@ -82,7 +82,7 @@ export const EmployeesTable = () => {
                   <button onClick={() => handleRemoveEmployee(employee.id)}>🗑️</button>
                 </div>
                 <div className={s.gridCell}>
-                  <EditDialog id={employee.id} />
+                  <EditEmployeeDialog id={employee.id} />
                 </div>
                 <div className={clsx(s.gridCell, s.name)}>{employee.name}</div>
                 <div className={s.gridCell}>{employee.phone}</div>

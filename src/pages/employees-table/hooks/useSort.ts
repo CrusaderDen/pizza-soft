@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Employee } from '@/api/app-api.types'
 import { useAppDispatch } from '@/app/hooks'
-import { employeesForRender } from '@/components/employees-table/employees-slice'
+import { employeesForRender } from '@/pages/employees-table/employees-slice'
 
 type SortArrow = '↑' | '↓' | '↕'
 
