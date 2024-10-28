@@ -5,7 +5,7 @@
 
   background-color: rgb(0 0 0 / 55%);
 
-  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: overlay-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .content {
@@ -18,7 +18,7 @@
   width: 100%;
   max-width: 400px;
 
-  animation: contentShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  animation: content-show 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .DialogContent:focus {
@@ -32,7 +32,7 @@
   }
 }
 
-@keyframes overlayShow {
+@keyframes overlay-show {
   from {
     opacity: 0;
   }
@@ -42,7 +42,7 @@
   }
 }
 
-@keyframes contentShow {
+@keyframes content-show {
   from {
     transform: translateX(-50%) scale(0.8);
     opacity: 0;
