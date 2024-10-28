@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -31,19 +31,18 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
     return employees.find(employee => employee.id === id)
   }
 
-  useEffect(() => {
-    if (id) {
-      const employee = filterById(employees, id)
+  if (id) {
+    const employee = filterById(employees, id)
 
-      if (employee) {
-        setValue('name', employee.name)
-        setValue('role', employee.role)
-        setValue('birthday', employee.birthday)
-        setValue('phone', employee.phone)
-        setValue('isArchive', employee.isArchive)
-      }
+    console.log(employee)
+    if (employee) {
+      setValue('name', employee.name)
+      setValue('role', employee.role)
+      setValue('birthday', employee.birthday)
+      setValue('phone', employee.phone)
+      setValue('isArchive', employee.isArchive)
     }
-  }, [id, employees, setValue])
+  }
 
   const onSubmit = async (data: any) => {
     setValidateError({})
@@ -110,7 +109,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         mask={'+7 (999) 999-99-99'}
         name={'phone'}
         placeholder={'+7 (___) ___-__-__'}
-        type={'number'}
+        type={'tel'}
         validateError={validateError}
       />
       <FormInput
@@ -128,7 +127,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         mask={'99.99.9999'}
         name={'birthday'}
         placeholder={'дд.мм.гггг'}
-        type={'number'}
+        type={'tel'}
         validateError={validateError}
       />
       <FormInput
