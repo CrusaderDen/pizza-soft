@@ -15,6 +15,14 @@
   background-color: #c6c6c6;
 }
 
+.sidebarContentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .title {
   align-self: center;
@@ -30,8 +38,11 @@
 
 .link {
   position: relative;
+  font-size: 18px;
   font-weight: 500;
   color: #000;
+
+
 }
 
 .linkIsActive {
@@ -45,5 +56,57 @@
 
     line-height: 0;
 
+  }
+}
+
+@media screen and (width <= 1400px) {
+  .sidebar {
+    //z-index: 20;
+    top: 0;
+    right: 0;
+    left: 0;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+    width: 100%;
+    height: 100px;
+  }
+
+  .sidebarContentWrapper {
+    flex-direction: row;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .linksWrapper {
+    gap: 10px;
+  }
+
+  .link {
+    font-size: 16px;
+  }
+}
+
+@media screen and (width <= 720px) {
+  .sidebar {
+    flex-direction: column;
+    gap: 0;
+    gap: 15px;
+    height: 180px;
+  }
+
+  .sidebarContentWrapper {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .linksWrapper {
+    flex-direction: row;
+    gap: 40px;
   }
 }

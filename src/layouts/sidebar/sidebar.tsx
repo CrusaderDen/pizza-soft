@@ -13,21 +13,23 @@ export const Sidebar = () => {
   return (
     <div className={s.sidebar}>
       <div className={s.title}>Pizza-soft</div>
-      <div className={s.linksWrapper}>
-        <Link
-          className={clsx(s.link, currentPath === PATHS.TABLE ? s.linkIsActive : '')}
-          to={PATHS.TABLE}
-        >
-          Список персонала
-        </Link>
-        <Link
-          className={clsx(s.link, currentPath === PATHS.CREATE_EMPLOYEE ? s.linkIsActive : '')}
-          to={PATHS.CREATE_EMPLOYEE}
-        >
-          Добавить сотрудника
-        </Link>
+      <div className={s.sidebarContentWrapper}>
+        <div className={s.linksWrapper}>
+          <Link
+            className={clsx(s.link, currentPath === PATHS.TABLE ? s.linkIsActive : '')}
+            to={PATHS.TABLE}
+          >
+            Список персонала
+          </Link>
+          <Link
+            className={clsx(s.link, currentPath === PATHS.CREATE_EMPLOYEE ? s.linkIsActive : '')}
+            to={PATHS.CREATE_EMPLOYEE}
+          >
+            Добавить сотрудника
+          </Link>
+        </div>
+        <FiltersSection />
       </div>
-      <FiltersSection />
     </div>
   )
 }

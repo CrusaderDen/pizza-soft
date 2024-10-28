@@ -34,6 +34,7 @@
   }
 }
 
+
 .dropdownContent {
   width: 180px;
   background-color: #eae9e9;
@@ -78,5 +79,11 @@
 
   &:hover {
     transform: scale(1.1) translateY(-50%);
+  }
+}
+
+@media screen and (width <= 1400px) {
+  .selectTrigger {
+    height: 30px;
   }
 }

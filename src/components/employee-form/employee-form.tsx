@@ -31,18 +31,6 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
     return employees.find(employee => employee.id === id)
   }
 
-  //
-  // if (id) {
-  //   //если передаю айди, значит это редактирование данных сотрудника, а не создание нового
-  //   const employee = filterById(employees, id)
-  //
-  //   setValue('name', employee?.name)
-  //   setValue('role', employee?.role)
-  //   setValue('birthday', employee?.birthday)
-  //   setValue('phone', employee?.phone)
-  //   setValue('isArchive', employee?.isArchive)
-  // }
-
   useEffect(() => {
     if (id) {
       const employee = filterById(employees, id)
@@ -58,7 +46,6 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   }, [id, employees, setValue])
 
   const onSubmit = async (data: any) => {
-    console.log(data)
     setValidateError({})
     const errors = customValidator(data)
 
@@ -78,7 +65,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       notifySuccess(
         setOpen
           ? 'Данные сотрудника успешно изменены'
-          : 'Новый сотрудник сохранён в базу. Продолжайте заведение, или нажмите "отмена"'
+          : 'Новый сотрудник сохранён в базу. Продолжайте заведение, или нажмите "отмена" для выхода'
       )
     } catch (e) {
       notifyError(`Ошибка ${e}. Попробуйте позже или обратитесь в поддержку. `)
