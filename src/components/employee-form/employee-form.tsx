@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -24,29 +24,81 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
 
   const { control, handleSubmit, reset, setValue } = useForm()
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
+  const [validateError, setValidateError] = useState({})
 
   function filterById(employees: Employee[], id: number): Employee | undefined {
     return employees.find(employee => employee.id === id)
   }
 
-  if (id) {
-    //если передаю айди, значит это редактирование данных сотрудника, а не создание нового
-    const employee = filterById(employees, id)
+  //
+  // if (id) {
+  //   //если передаю айди, значит это редактирование данных сотрудника, а не создание нового
+  //   const employee = filterById(employees, id)
+  //
+  //   setValue('name', employee?.name)
+  //   setValue('role', employee?.role)
+  //   setValue('birthday', employee?.birthday)
+  //   setValue('phone', employee?.phone)
+  //   setValue('isArchive', employee?.isArchive)
+  // }
 
-    setValue('name', employee?.name)
-    setValue('role', employee?.role)
-    setValue('birthday', employee?.birthday)
-    setValue('phone', employee?.phone)
-    setValue('isArchive', employee?.isArchive)
+  useEffect(() => {
+    if (id) {
+      const employee = filterById(employees, id)
+
+      if (employee) {
+        setValue('name', employee.name)
+        setValue('role', employee.role)
+        setValue('birthday', employee.birthday)
+        setValue('phone', employee.phone)
+        setValue('isArchive', employee.isArchive)
+      }
+    }
+  }, [id, employees, setValue])
+
+  const customValidator = (data: any) => {
+    const errors: any = {}
+
+    if (data?.name === '') {
+      errors.name = 'Введите имя'
+    } else if (data?.name.length > 25) {
+      errors.name = 'Имя не может быть длиннее 25 символов'
+    } else if (data?.name.length < 2) {
+      errors.name = 'Имя не может быть короче 2 символов'
+    }
+
+    if (data?.phone.length < 18) {
+      errors.phone = 'Введите номер телефона до конца'
+    }
+
+    if (data.role === '') {
+      errors.role = 'Выберите должность'
+    }
+
+    if (data?.birthday === '') {
+      errors.birthday = 'Заполните дату рождения'
+    }
+
+    return errors
   }
 
   const onSubmit = async (data: any) => {
-    console.log(data)
+    setValidateError({})
+    const errors = customValidator(data)
+
+    if (Object.keys(errors).length !== 0) {
+      setValidateError(errors)
+
+      return
+    }
+
     setIsButtonDisabled(true)
+
     try {
       await dispatch(dispatchVariant({ ...data, id }))
       setValue('phone', '')
       setValue('birthday', '')
+      setValue('role', '-')
       notifySuccess(
         setOpen
           ? 'Данные сотрудника успешно изменены'
@@ -68,8 +120,10 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   const handleEscape = () => {
     if (setOpen) {
       setOpen(false)
+      setValidateError({})
     } else {
       reset()
+      setValidateError({})
       navigate(PATHS.TABLE)
     }
   }
@@ -79,7 +133,13 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       <span className={s.title}>
         {typeForm === 'create-employee-page' ? 'Добавить сотрудника' : 'Редактировать'}
       </span>
-      <FormInput className={s.formInput} control={control} label={'Имя'} name={'name'} />
+      <FormInput
+        className={s.formInput}
+        control={control}
+        label={'Имя'}
+        name={'name'}
+        validateError={validateError}
+      />
       <FormInput
         className={s.formInput}
         control={control}
@@ -87,6 +147,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         mask={'+7 (999) 999-99-99'}
         name={'phone'}
         placeholder={'+7 (___) ___-__-__'}
+        validateError={validateError}
       />
       <FormInput
         className={s.formInput}
@@ -94,6 +155,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         label={'Должность'}
         name={'role'}
         type={'role'}
+        validateError={validateError}
       />
       <FormInput
         className={s.formInput}
@@ -102,6 +164,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         mask={'99.99.9999'}
         name={'birthday'}
         placeholder={'дд.мм.гггг'}
+        validateError={validateError}
       />
       <FormInput
         className={s.formCheckbox}
@@ -109,6 +172,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         label={'Архив'}
         name={'isArchive'}
         type={'checkbox'}
+        validateError={validateError}
       />
       <div className={s.buttonWrapper}>
         <FormButton disabled={isButtonDisabled} type={'submit'}>

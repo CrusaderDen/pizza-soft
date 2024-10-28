@@ -13,20 +13,32 @@ type FormInputProps = {
   name: string
   placeholder?: string
   type?: string
+  validateError?: Record<string, string>
 }
 
 export const FormInput = (props: FormInputProps) => {
-  const { className, control, label, mask = '', name, placeholder, type = 'text', ...rest } = props
+  const {
+    className,
+    control,
+    label,
+    mask = '',
+    name,
+    placeholder,
+    type = 'text',
+    validateError,
+    ...rest
+  } = props
 
   const id = useId()
   const {
     field: { onBlur, onChange, ref, value },
-    fieldState: { error },
   } = useController({
     control,
     defaultValue: '',
     name,
   })
+
+  console.log(validateError?.[name])
 
   if (type === 'role') {
     return (
@@ -43,6 +55,7 @@ export const FormInput = (props: FormInputProps) => {
             onChange(e.target.value)
           }}
           ref={ref as Ref<HTMLSelectElement>}
+          value={value}
           {...rest}
         >
           <option value={'-'}>- выбрать -</option>
@@ -70,8 +83,8 @@ export const FormInput = (props: FormInputProps) => {
           type={type}
           value={value}
           {...rest}
-        ></InputMask>
-        {error && <span style={{ color: 'red' }}>{error.message}</span>}
+        />
+        {validateError?.[name] && <span className={s.error}>{validateError?.[name]}</span>}
       </div>
     )
   }
