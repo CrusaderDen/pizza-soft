@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { PATHS } from '@/common/paths'
 import { notifyError, notifySuccess } from '@/common/toastConfig'
 import { FormButton } from '@/components/employee-form/form-button/form-button'
-import { CustomInput, FormInput } from '@/components/employee-form/form-input/form-input'
+import { FormInput } from '@/components/employee-form/form-input/form-input'
 
 import s from './employee-form.module.scss'
 
@@ -22,7 +22,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   const dispatch = useAppDispatch()
   const { employees } = useAppSelector(state => state.employees)
 
-  const { control, handleSubmit, register, reset, setValue } = useForm()
+  const { control, handleSubmit, reset, setValue } = useForm()
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   function filterById(employees: Employee[], id: number): Employee | undefined {
@@ -30,6 +30,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   }
 
   if (id) {
+    //если передаю айди, значит это редактирование данных сотрудника, а не создание нового
     const employee = filterById(employees, id)
 
     setValue('name', employee?.name)
@@ -55,7 +56,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       console.log(e)
     } finally {
       reset()
-      setOpen && setOpen(false)
+      setOpen && setOpen(false) // если передан setOpen, значит это модалка, закрываем её
       setTimeout(() => {
         // блокировка кнопки на имитационное время выполнения запроса
         setIsButtonDisabled(false)
@@ -77,17 +78,8 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       <span className={s.title}>
         {typeForm === 'create-employee-page' ? 'Добавить сотрудника' : 'Редактировать'}
       </span>
+      <FormInput className={s.formInput} control={control} label={'Имя'} name={'name'} />
       <FormInput
-        className={s.formInput}
-        label={'Имя'}
-        {...register('name', { maxLength: 30, required: true })}
-      />
-      {/*<FormInput*/}
-      {/*  className={s.formInput}*/}
-      {/*  label={'Телефон'}*/}
-      {/*  {...register('phone', { required: true })}*/}
-      {/*/>*/}
-      <CustomInput
         className={s.formInput}
         control={control}
         label={'Телефон'}
@@ -97,16 +89,12 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       />
       <FormInput
         className={s.formInput}
+        control={control}
         label={'Должность'}
+        name={'role'}
         type={'role'}
-        {...register('role', { required: true })}
       />
-      {/*<FormInput*/}
-      {/*  className={s.formInput}*/}
-      {/*  label={'Дата рождения'}*/}
-      {/*  {...register('birthday', { required: true })}*/}
-      {/*/>{' '}*/}
-      <CustomInput
+      <FormInput
         className={s.formInput}
         control={control}
         label={'Дата рождения'}
@@ -116,8 +104,9 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       />
       <FormInput
         className={s.formCheckbox}
+        control={control}
         label={'Архив'}
-        {...register('isArchive')}
+        name={'isArchive'}
         type={'checkbox'}
       />
       <div className={s.buttonWrapper}>
