@@ -34,7 +34,6 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   if (id) {
     const employee = filterById(employees, id)
 
-    console.log(employee)
     if (employee) {
       setValue('name', employee.name)
       setValue('role', employee.role)
@@ -61,6 +60,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       setValue('phone', '')
       setValue('birthday', '')
       setValue('role', '-')
+
       notifySuccess(
         setOpen
           ? 'Данные сотрудника успешно изменены'
