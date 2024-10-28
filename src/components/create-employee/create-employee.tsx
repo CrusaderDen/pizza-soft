@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, forwardRef, useId, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useController, useForm } from 'react-hook-form'
+import InputMask from 'react-input-mask'
 import { useNavigate } from 'react-router-dom'
 
 import { Employee } from '@/app/app-api.types'
@@ -31,7 +32,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   const dispatch = useAppDispatch()
   const { employees } = useAppSelector(state => state.employees)
 
-  const { handleSubmit, register, reset, setValue } = useForm()
+  const { control, handleSubmit, register, reset, setValue } = useForm()
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
   function filterById(employees: Employee[], id: number): Employee | undefined {
@@ -52,6 +53,8 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
     setIsButtonDisabled(true)
     try {
       await dispatch(dispatchVariant({ ...data, id }))
+      setValue('phone', '')
+      setValue('birthday', '')
       notifySuccess(
         setOpen
           ? 'Данные сотрудника успешно изменены'
@@ -89,21 +92,37 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         label={'Имя'}
         {...register('name', { maxLength: 30, required: true })}
       />
-      <FormInput
+      {/*<FormInput*/}
+      {/*  className={s.formInput}*/}
+      {/*  label={'Телефон'}*/}
+      {/*  {...register('phone', { required: true })}*/}
+      {/*/>*/}
+      <CustomInput
         className={s.formInput}
+        control={control}
         label={'Телефон'}
-        {...register('phone', { required: true })}
+        mask={'+7 (999) 999-99-99'}
+        name={'phone'}
+        placeholder={'+7 (___) ___-__-__'}
       />
       <FormInput
         className={s.formInput}
         label={'Должность'}
         {...register('role', { required: true })}
       />
-      <FormInput
+      {/*<FormInput*/}
+      {/*  className={s.formInput}*/}
+      {/*  label={'Дата рождения'}*/}
+      {/*  {...register('birthday', { required: true })}*/}
+      {/*/>{' '}*/}
+      <CustomInput
         className={s.formInput}
+        control={control}
         label={'Дата рождения'}
-        {...register('birthday', { required: true })}
-      />{' '}
+        mask={'99.99.9999'}
+        name={'birthday'}
+        placeholder={'дд.мм.гггг'}
+      />
       <FormInput
         className={s.formCheckbox}
         label={'Архив'}
@@ -152,6 +171,51 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     )
   }
 )
+
+const CustomInput = ({
+  className,
+  control,
+  label,
+  mask,
+  name,
+  placeholder,
+  type = 'text',
+  ...rest
+}: any) => {
+  const id = useId()
+  const {
+    field: { onBlur, onChange, ref, value },
+    fieldState: { error },
+  } = useController({
+    control,
+    defaultValue: '',
+    name,
+  })
+
+  return (
+    <div className={className}>
+      <label className={s.label} htmlFor={id}>
+        {label}
+      </label>
+      <InputMask
+        className={s.input}
+        id={id}
+        mask={mask}
+        name={name}
+        onBlur={onBlur}
+        onChange={onChange}
+        placeholder={placeholder}
+        ref={ref}
+        type={type}
+        value={value}
+        {...rest}
+      >
+        {/*{inputProps => <input id={name} {...inputProps} />}*/}
+      </InputMask>
+      {error && <span style={{ color: 'red' }}>{error.message}</span>}
+    </div>
+  )
+}
 
 type FormButtonProps = {
   className?: string
