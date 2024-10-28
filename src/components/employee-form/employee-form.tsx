@@ -110,6 +110,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         mask={'+7 (999) 999-99-99'}
         name={'phone'}
         placeholder={'+7 (___) ___-__-__'}
+        type={'number'}
         validateError={validateError}
       />
       <FormInput
@@ -127,6 +128,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         mask={'99.99.9999'}
         name={'birthday'}
         placeholder={'дд.мм.гггг'}
+        type={'number'}
         validateError={validateError}
       />
       <FormInput

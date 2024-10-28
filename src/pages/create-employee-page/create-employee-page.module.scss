@@ -7,7 +7,7 @@
   height: 100vh;
   margin-right: 15px;
   margin-left: 15px;
-  padding-top: 50px;
+  padding: 30px;
 }
 
 
@@ -15,14 +15,13 @@
   .wrapper {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
-    margin-top: 50px;
+    justify-content: flex-start;
+    height: auto;
   }
 }
 
 @media screen and (width <= 720px) {
   .wrapper {
     align-items: flex-start;
-    margin-top: 130px;
   }
 }

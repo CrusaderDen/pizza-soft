@@ -8,15 +8,7 @@
 @media screen and (width <= 1400px) {
   .mainLayoutWrapper {
     align-items: center;
-    margin-top: 100px;
     margin-left: 0;
   }
 }
 
-@media screen and (width <= 720px) {
-  .mainLayoutWrapper {
-    align-items: center;
-    margin-top: 180px;
-    margin-left: 0;
-  }
-}
