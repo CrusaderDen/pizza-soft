@@ -23,7 +23,7 @@ export const notifySuccess = (successMsg: string | undefined) => {
     pauseOnHover: true,
     position: 'bottom-center',
     progress: undefined,
-    style: { height: '150px' },
+    style: { height: '75px' },
     theme: 'colored',
     transition: Bounce,
   })

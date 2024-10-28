@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, forwardRef, useId, useState } from 'react'
+import { ComponentPropsWithoutRef, Ref, forwardRef, useId, useState } from 'react'
 import { useController, useForm } from 'react-hook-form'
 import InputMask from 'react-input-mask'
 import { useNavigate } from 'react-router-dom'
@@ -108,6 +108,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       <FormInput
         className={s.formInput}
         label={'Должность'}
+        type={'role'}
         {...register('role', { required: true })}
       />
       {/*<FormInput*/}
@@ -147,11 +148,34 @@ type FormInputProps = {
   label: string
   placeholder?: string
   type?: string
-} & ComponentPropsWithoutRef<'input'>
+} & ComponentPropsWithoutRef<'input'> &
+  ComponentPropsWithoutRef<'select'>
 
-const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
+const FormInput = forwardRef<HTMLInputElement | HTMLSelectElement, FormInputProps>(
   ({ className, label, name, placeholder, type = 'text', ...rest }, ref) => {
     const id = useId()
+
+    if (type === 'role') {
+      return (
+        <div className={className}>
+          <label className={s.label} htmlFor={id}>
+            {label}
+          </label>
+          <select
+            className={s.input}
+            id={id}
+            name={name}
+            ref={ref as Ref<HTMLSelectElement>}
+            {...rest}
+          >
+            <option value={'-'}>- выбрать -</option>
+            <option value={'cook'}>cook</option>
+            <option value={'driver'}>driver</option>
+            <option value={'waiter'}>waiter</option>
+          </select>
+        </div>
+      )
+    }
 
     return (
       <div className={className}>
@@ -163,7 +187,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
           id={id}
           name={name}
           placeholder={placeholder}
-          ref={ref}
+          ref={ref as Ref<HTMLInputElement>}
           type={type}
           {...rest}
         />
