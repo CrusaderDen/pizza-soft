@@ -1,8 +1,8 @@
-import { Role } from '@/app/app-api.types'
+import { Role } from '@/api/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { ArrowDownIcon } from '@/assets/arrow-down-icon'
 import { CloseIcon } from '@/assets/close-icon'
-import { setSelectedEmployeesRole } from '@/components/employees-table/employeesSlice'
+import { setSelectedEmployeesRole } from '@/components/employees-table/employees-slice'
 import { Content, Item, Portal, Root, Trigger } from '@radix-ui/react-dropdown-menu'
 
 import s from './filter-by-role.module.scss'

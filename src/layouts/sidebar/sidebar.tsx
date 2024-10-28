@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 
-import { PATHS } from '@/app/paths'
-import { FiltersSection } from '@/components/sidebar/filters-section/filters-section'
+import { PATHS } from '@/common/paths'
+import { FiltersSection } from '@/layouts/sidebar/filters/filters-section'
 import clsx from 'clsx'
 
 import s from './sidebar.module.scss'

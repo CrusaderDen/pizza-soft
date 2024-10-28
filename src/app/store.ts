@@ -1,4 +1,4 @@
-import employeesReducer from '@/components/employees-table/employeesSlice'
+import employeesReducer from '@/components/employees-table/employees-slice'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({

@@ -1,24 +1,15 @@
-import { ComponentPropsWithoutRef, Ref, forwardRef, useId, useState } from 'react'
-import { useController, useForm } from 'react-hook-form'
-import InputMask from 'react-input-mask'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { Employee } from '@/app/app-api.types'
+import { Employee } from '@/api/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { PATHS } from '@/app/paths'
-import { notifyError, notifySuccess } from '@/app/toastConfig'
-import { addEmployee } from '@/components/employees-table/employeesSlice'
-import clsx from 'clsx'
+import { PATHS } from '@/common/paths'
+import { notifyError, notifySuccess } from '@/common/toastConfig'
+import { FormButton } from '@/components/employee-form/form-button/form-button'
+import { CustomInput, FormInput } from '@/components/employee-form/form-input/form-input'
 
-import s from './create-employee.module.scss'
-
-export const CreateEmployee = () => {
-  return (
-    <div className={s.wrapper}>
-      <EmployeeForm dispatchVariant={addEmployee} typeForm={'create-employee'} />
-    </div>
-  )
-}
+import s from './employee-form.module.scss'
 
 type EmployeeFormProps = {
   dispatchVariant: any
@@ -26,7 +17,6 @@ type EmployeeFormProps = {
   setOpen?: (open: boolean) => void
   typeForm: 'create-employee' | 'edit-form'
 }
-
 export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: EmployeeFormProps) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -139,118 +129,5 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         </FormButton>
       </div>
     </form>
-  )
-}
-
-type FormInputProps = {
-  className?: string
-  errorMsg?: string
-  label: string
-  placeholder?: string
-  type?: string
-} & ComponentPropsWithoutRef<'input'> &
-  ComponentPropsWithoutRef<'select'>
-
-const FormInput = forwardRef<HTMLInputElement | HTMLSelectElement, FormInputProps>(
-  ({ className, label, name, placeholder, type = 'text', ...rest }, ref) => {
-    const id = useId()
-
-    if (type === 'role') {
-      return (
-        <div className={className}>
-          <label className={s.label} htmlFor={id}>
-            {label}
-          </label>
-          <select
-            className={s.input}
-            id={id}
-            name={name}
-            ref={ref as Ref<HTMLSelectElement>}
-            {...rest}
-          >
-            <option value={'-'}>- выбрать -</option>
-            <option value={'cook'}>cook</option>
-            <option value={'driver'}>driver</option>
-            <option value={'waiter'}>waiter</option>
-          </select>
-        </div>
-      )
-    }
-
-    return (
-      <div className={className}>
-        <label className={s.label} htmlFor={id}>
-          {label}
-        </label>
-        <input
-          className={s.input}
-          id={id}
-          name={name}
-          placeholder={placeholder}
-          ref={ref as Ref<HTMLInputElement>}
-          type={type}
-          {...rest}
-        />
-      </div>
-    )
-  }
-)
-
-const CustomInput = ({
-  className,
-  control,
-  label,
-  mask,
-  name,
-  placeholder,
-  type = 'text',
-  ...rest
-}: any) => {
-  const id = useId()
-  const {
-    field: { onBlur, onChange, ref, value },
-    fieldState: { error },
-  } = useController({
-    control,
-    defaultValue: '',
-    name,
-  })
-
-  return (
-    <div className={className}>
-      <label className={s.label} htmlFor={id}>
-        {label}
-      </label>
-      <InputMask
-        className={s.input}
-        id={id}
-        mask={mask}
-        name={name}
-        onBlur={onBlur}
-        onChange={onChange}
-        placeholder={placeholder}
-        ref={ref}
-        type={type}
-        value={value}
-        {...rest}
-      >
-        {/*{inputProps => <input id={name} {...inputProps} />}*/}
-      </InputMask>
-      {error && <span style={{ color: 'red' }}>{error.message}</span>}
-    </div>
-  )
-}
-
-type FormButtonProps = {
-  className?: string
-  onClick?: () => void
-  type?: 'button' | 'reset' | 'submit'
-} & ComponentPropsWithoutRef<'button'>
-
-const FormButton = ({ children, className, disabled, onClick, type }: FormButtonProps) => {
-  return (
-    <button className={clsx(s.button, className)} disabled={disabled} onClick={onClick} type={type}>
-      {children}
-    </button>
   )
 }

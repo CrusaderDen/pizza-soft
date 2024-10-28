@@ -1,6 +1,7 @@
-import { fetchData } from '@/app/app-api'
-import { Employee, Role } from '@/app/app-api.types'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { fetchData } from '@/api/app-api'
+import { Employee, Role } from '@/api/app-api.types'
+import { createAppAsyncThunk } from '@/app/withTypes'
+import { createSlice } from '@reduxjs/toolkit'
 
 type EmployeeState = {
   employees: Employee[]
@@ -19,14 +20,14 @@ const initialState: EmployeeState = {
 }
 
 //получаем сотрудников, здесь был бы GET-запрос
-export const fetchEmployees = createAsyncThunk('employees/fetchEmployees', async () => {
+export const fetchEmployees = createAppAsyncThunk('employees/fetchEmployees', async () => {
   const response = await fetchData()
 
   return response
 })
 
 //Создаем нового сотрудника, здесь был бы POST-запрос
-export const addEmployee = createAsyncThunk(
+export const addEmployee = createAppAsyncThunk(
   'employees/addEmployee',
   async (newEmployee: Omit<Employee, 'id'>) => {
     return newEmployee
@@ -34,7 +35,7 @@ export const addEmployee = createAsyncThunk(
 )
 
 //Редактирование данных сотрудника, здесь был бы PUT-запрос
-export const updateEmployee = createAsyncThunk(
+export const updateEmployee = createAppAsyncThunk(
   'employees/updateEmployee',
   async (updatedEmployee: Employee) => {
     return updatedEmployee
@@ -42,9 +43,12 @@ export const updateEmployee = createAsyncThunk(
 )
 
 //Редактирование данных сотрудника, здесь был бы DELETE-запрос
-export const deleteEmployee = createAsyncThunk('employees/deleteEmployee', async (id: number) => {
-  return id
-})
+export const deleteEmployee = createAppAsyncThunk(
+  'employees/deleteEmployee',
+  async (id: number) => {
+    return id
+  }
+)
 
 export const employeesSlice = createSlice({
   extraReducers: builder => {
@@ -98,4 +102,5 @@ export const employeesSlice = createSlice({
 })
 export const { employeesForRender, setSelectedEmployeesRole, setSelectedEmployeesStatus } =
   employeesSlice.actions
+
 export default employeesSlice.reducer

@@ -1,6 +1,6 @@
 import { useAppDispatch } from '@/app/hooks'
-import { setSelectedEmployeesStatus } from '@/components/employees-table/employeesSlice'
-import { FilterByRole } from '@/components/sidebar/filters-section/filter-by-role/filter-by-role'
+import { setSelectedEmployeesStatus } from '@/components/employees-table/employees-slice'
+import { FilterByRole } from '@/layouts/sidebar/filters/filter-by-role/filter-by-role'
 
 import s from './filters-section.module.scss'
 

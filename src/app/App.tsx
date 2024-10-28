@@ -1,20 +1,20 @@
 import { Outlet } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
-import { Sidebar } from '@/components/sidebar/sidebar'
+import { MainLayout } from '@/layouts/main-layout/main-layout'
+import { Sidebar } from '@/layouts/sidebar/sidebar'
 
 import 'react-toastify/dist/ReactToastify.css'
 
-import s from './App.module.scss'
-
 function App() {
   return (
-    <div className={s.appLayout}>
-      {/*<EmployeesTable />*/}
-      <Outlet />
+    <>
+      <MainLayout>
+        <Outlet />
+      </MainLayout>
       <Sidebar />
       <ToastContainer />
-    </div>
+    </>
   )
 }
 

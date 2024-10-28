@@ -1,10 +1,10 @@
 import { Fragment, useEffect } from 'react'
 
-import { Role } from '@/app/app-api.types'
+import { Role } from '@/api/app-api.types'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { notifyError, notifySuccess } from '@/app/toastConfig'
+import { notifyError, notifySuccess } from '@/common/toastConfig'
 import { EditDialog } from '@/components/employees-table/edit-dialog/edit-dialog'
-import { deleteEmployee, fetchEmployees } from '@/components/employees-table/employeesSlice'
+import { deleteEmployee, fetchEmployees } from '@/components/employees-table/employees-slice'
 import { useSort } from '@/components/employees-table/useSort'
 import { Loader } from '@/components/loader/loader'
 import clsx from 'clsx'
