@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { EmployeeForm } from '@/components/employee-form/employee-form'
-import { updateEmployee } from '@/pages/employees-table/employees-slice'
+import { updateEmployee } from '@/components/employee-form/employees-form-slice'
 import * as Dialog from '@radix-ui/react-dialog'
 
 import s from './edit-employee-dialog.module.scss'

@@ -15,7 +15,7 @@ type EmployeeFormProps = {
   dispatchVariant: any
   id?: number
   setOpen?: (open: boolean) => void
-  typeForm: 'create-employee' | 'edit-form'
+  typeForm: 'create-employee-page' | 'edit-form'
 }
 export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: EmployeeFormProps) => {
   const navigate = useNavigate()
@@ -75,7 +75,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
       <span className={s.title}>
-        {typeForm === 'create-employee' ? 'Добавить сотрудника' : 'Редактировать'}
+        {typeForm === 'create-employee-page' ? 'Добавить сотрудника' : 'Редактировать'}
       </span>
       <FormInput
         className={s.formInput}
@@ -122,7 +122,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       />
       <div className={s.buttonWrapper}>
         <FormButton disabled={isButtonDisabled} type={'submit'}>
-          {typeForm === 'create-employee' ? 'Создать' : 'Сохранить изменения'}
+          {typeForm === 'create-employee-page' ? 'Создать' : 'Сохранить изменения'}
         </FormButton>
         <FormButton onClick={handleEscape} type={'button'}>
           Отмена
