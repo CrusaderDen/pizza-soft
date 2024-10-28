@@ -38,8 +38,6 @@ export const FormInput = (props: FormInputProps) => {
     name,
   })
 
-  console.log(validateError?.[name])
-
   if (type === 'role') {
     return (
       <div className={className}>
@@ -63,6 +61,7 @@ export const FormInput = (props: FormInputProps) => {
           <option value={'driver'}>driver</option>
           <option value={'waiter'}>waiter</option>
         </select>
+        {validateError?.[name] && <span className={s.error}>{validateError?.[name]}</span>}
       </div>
     )
   } else {
@@ -83,7 +82,7 @@ export const FormInput = (props: FormInputProps) => {
           type={type}
           value={value}
           {...rest}
-        />
+        ></InputMask>
         {validateError?.[name] && <span className={s.error}>{validateError?.[name]}</span>}
       </div>
     )

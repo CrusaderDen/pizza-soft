@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { PATHS } from '@/common/paths'
 import { notifyError, notifySuccess } from '@/common/toastConfig'
 import { FormButton } from '@/components/employee-form/form-button/form-button'
+import { customValidator } from '@/components/employee-form/form-input/custom-validator'
 import { FormInput } from '@/components/employee-form/form-input/form-input'
 
 import s from './employee-form.module.scss'
@@ -56,33 +57,8 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
     }
   }, [id, employees, setValue])
 
-  const customValidator = (data: any) => {
-    const errors: any = {}
-
-    if (data?.name === '') {
-      errors.name = 'Введите имя'
-    } else if (data?.name.length > 25) {
-      errors.name = 'Имя не может быть длиннее 25 символов'
-    } else if (data?.name.length < 2) {
-      errors.name = 'Имя не может быть короче 2 символов'
-    }
-
-    if (data?.phone.length < 18) {
-      errors.phone = 'Введите номер телефона до конца'
-    }
-
-    if (data.role === '') {
-      errors.role = 'Выберите должность'
-    }
-
-    if (data?.birthday === '') {
-      errors.birthday = 'Заполните дату рождения'
-    }
-
-    return errors
-  }
-
   const onSubmit = async (data: any) => {
+    console.log(data)
     setValidateError({})
     const errors = customValidator(data)
 
