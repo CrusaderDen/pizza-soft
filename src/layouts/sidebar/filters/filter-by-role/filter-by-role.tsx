@@ -27,7 +27,7 @@ export const FilterByRole = () => {
           </Content>
         </Portal>
       </Root>
-      {!!selectedEmployeesRole.length && <SelectClearBtn />}
+      {selectedEmployeesRole && !!selectedEmployeesRole.length && <SelectClearBtn />}
     </>
   )
 }

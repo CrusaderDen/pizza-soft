@@ -87,7 +87,7 @@ export const appSlice = createSlice({
       })
   },
   initialState,
-  name: 'employees',
+  name: 'appSlice',
   reducers: {
     employeesForRender: (state, action) => {
       state.employees = action.payload

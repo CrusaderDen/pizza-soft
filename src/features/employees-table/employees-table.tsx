@@ -18,7 +18,7 @@ export const EmployeesTable = () => {
   const { birthdaySort, handleBirthdaySort, handleNameSort, nameSort } = useSort(employees)
 
   useEffect(() => {
-    if (employees.length === 0) {
+    if (employees && employees.length === 0) {
       dispatch(fetchEmployees())
     }
   }, [dispatch])
@@ -29,7 +29,7 @@ export const EmployeesTable = () => {
 
   let filteredEmployees = employees
 
-  if (selectedEmployeesRole.length) {
+  if (selectedEmployeesRole && selectedEmployeesRole.length) {
     filteredEmployees = filteredEmployees.filter(employee =>
       selectedEmployeesRole.includes(employee.role as Role)
     )
@@ -55,7 +55,7 @@ export const EmployeesTable = () => {
   return (
     <>
       {loading && <Loader />}
-      {!!employees.length && (
+      {employees && !!employees.length && (
         <div className={s.gridTable}>
           <div className={s.gridHeader}></div>
           <div className={s.gridHeader}></div>
