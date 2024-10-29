@@ -6,7 +6,7 @@ import s from './create-employee-page.module.scss'
 export const CreateEmployeePage = () => {
   return (
     <div className={s.wrapper}>
-      <p style={{ position: 'absolute', top: '5000px' }}>
+      <p style={{ left: '-9999px', position: 'absolute' }}>
         Уникальный текст для прохождения тестов на рендер CreateEmployeePage
       </p>
       <EmployeeForm dispatchVariant={addEmployee} typeForm={'create-employee-page'} />

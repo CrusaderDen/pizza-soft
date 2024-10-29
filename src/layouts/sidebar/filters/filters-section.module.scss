@@ -14,9 +14,15 @@
 
 
 .filtersSetLegend {
+  position: relative;
+  z-index: 30;
+
   margin-left: 15px;
   padding: 3px 6px;
+
   font-weight: bold;
+
+  background-color: #c6c6c6;
 }
 
 .filterByRole {
