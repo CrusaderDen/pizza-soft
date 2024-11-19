@@ -1,7 +1,7 @@
 import { Employee } from '@/api/app-api.types'
 import dataFromBackend from '@/api/mock-backend/employees.json'
 
-export const fetchData = () => {
+export const fetchEmployeesData = () => {
   return new Promise<Employee[]>(res => {
     setTimeout(() => {
       res(dataFromBackend as Employee[])

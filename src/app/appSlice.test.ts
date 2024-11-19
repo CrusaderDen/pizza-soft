@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest'
 import reducer, {
   addEmployee,
   deleteEmployee,
-  employeesForRender,
   fetchEmployees,
+  setEmployees,
   setSelectedEmployeesRole,
   setSelectedEmployeesStatus,
   updateEmployee,
@@ -106,7 +106,7 @@ describe('app-slice', () => {
   })
 
   it('should handle employeesForRender', () => {
-    const action = { payload: [{ id: 1, name: 'John Doe' }], type: employeesForRender.type }
+    const action = { payload: [{ id: 1, name: 'John Doe' }], type: setEmployees.type }
     const state = reducer(initialState, action)
 
     expect(state.employees).toEqual(action.payload)

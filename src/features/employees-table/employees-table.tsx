@@ -1,7 +1,7 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 
 import { Role } from '@/api/app-api.types'
-import { deleteEmployee, fetchEmployees } from '@/app/app-slice'
+import { deleteEmployee } from '@/app/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { notifyError, notifySuccess } from '@/common/toastConfig'
 import { Loader } from '@/components/loader/loader'
@@ -16,12 +16,6 @@ export const EmployeesTable = () => {
   const { employees, error, loading, selectedEmployeesRole, selectedEmployeesStatus } =
     useAppSelector(state => state.employees)
   const { birthdaySort, handleBirthdaySort, handleNameSort, nameSort } = useSort(employees)
-
-  useEffect(() => {
-    if (employees && employees.length === 0) {
-      dispatch(fetchEmployees())
-    }
-  }, [dispatch])
 
   if (error) {
     return <div>Error: {error}</div>
