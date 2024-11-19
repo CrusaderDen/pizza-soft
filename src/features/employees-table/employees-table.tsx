@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
 
-import { Role } from '@/api/app-api.types'
 import { deleteEmployee } from '@/app/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { notifyError, notifySuccess } from '@/common/toastConfig'
@@ -13,24 +12,11 @@ import s from './employees-table.module.scss'
 
 export const EmployeesTable = () => {
   const dispatch = useAppDispatch()
-  const { employees, error, loading, selectedEmployeesRole, selectedEmployeesStatus } =
-    useAppSelector(state => state.employees)
-  const { birthdaySort, handleBirthdaySort, handleNameSort, nameSort } = useSort(employees)
+  const { error, filteredEmployees, loading } = useAppSelector(state => state.employees)
+  const { birthdaySort, handleBirthdaySort, handleNameSort, nameSort } = useSort(filteredEmployees)
 
   if (error) {
     return <div>Error: {error}</div>
-  }
-
-  let filteredEmployees = employees
-
-  if (selectedEmployeesRole && selectedEmployeesRole.length) {
-    filteredEmployees = filteredEmployees.filter(employee =>
-      selectedEmployeesRole.includes(employee.role as Role)
-    )
-  }
-
-  if (selectedEmployeesStatus) {
-    filteredEmployees = filteredEmployees.filter(employee => employee.isArchive)
   }
 
   const handleRemoveEmployee = async (id: number) => {
@@ -49,7 +35,7 @@ export const EmployeesTable = () => {
   return (
     <>
       {loading && <Loader />}
-      {employees && !!employees.length && (
+      {filteredEmployees && !!filteredEmployees.length && (
         <div className={s.gridTable}>
           <div className={s.gridHeader}></div>
           <div className={s.gridHeader}></div>

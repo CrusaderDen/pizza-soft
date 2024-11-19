@@ -31,6 +31,7 @@ export const appSlice = createSlice({
       .addCase(fetchEmployees.fulfilled, (state, action) => {
         state.loading = false
         state.employees = action.payload
+        state.filteredEmployees = action.payload
       })
       .addCase(fetchEmployees.rejected, (state, action) => {
         state.loading = false
@@ -82,10 +83,17 @@ export const appSlice = createSlice({
   reducers: {
     setEmployees: (state, action) => {
       state.employees = action.payload
-      state.filteredEmployees = action.payload
     },
     setSelectedEmployeesRole: (state, action) => {
       state.selectedEmployeesRole = action.payload
+      if (!action.payload.length) {
+        state.filteredEmployees = state.employees
+
+        return
+      }
+      state.filteredEmployees = state.employees.filter(employee =>
+        action.payload.includes(employee.role)
+      )
     },
     setSelectedEmployeesStatus: (state, action) => {
       state.selectedEmployeesStatus = action.payload
