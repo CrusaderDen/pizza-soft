@@ -57,9 +57,9 @@ export const FormInput = (props: FormInputProps) => {
           {...rest}
         >
           <option value={'-'}>- выбрать -</option>
-          <option value={'cook'}>cook</option>
-          <option value={'driver'}>driver</option>
-          <option value={'waiter'}>waiter</option>
+          <option value={'повар'}>повар</option>
+          <option value={'водитель'}>водитель</option>
+          <option value={'официант'}>официант</option>
         </select>
         {validateError?.[name] && <span className={s.error}>{validateError?.[name]}</span>}
       </div>

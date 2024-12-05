@@ -15,6 +15,7 @@ describe('app-slice', () => {
   const initialState = {
     employees: [],
     error: null,
+    filteredEmployees: [],
     loading: false,
     selectedEmployeesRole: [],
     selectedEmployeesStatus: false,
@@ -67,7 +68,7 @@ describe('app-slice', () => {
           isArchive: false,
           name: 'Илья Емельянов',
           phone: '+7 (883) 508-3269',
-          role: 'driver' as Role,
+          role: 'водитель' as Role,
         },
       ],
     }
@@ -77,7 +78,7 @@ describe('app-slice', () => {
       isArchive: false,
       name: 'Илья Емельянов',
       phone: '+7 (883) 508-3269',
-      role: 'cook',
+      role: 'повар',
     }
     const action = { payload: updatedEmployee, type: updateEmployee.fulfilled.type }
     const state = reducer(initialStateWithEmployees, action)
@@ -95,7 +96,7 @@ describe('app-slice', () => {
           isArchive: false,
           name: 'Илья Емельянов',
           phone: '+7 (883) 508-3269',
-          role: 'driver' as Role,
+          role: 'водитель' as Role,
         },
       ],
     }

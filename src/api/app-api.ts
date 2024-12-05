@@ -1,5 +1,5 @@
 import { Employee } from '@/api/app-api.types'
-import dataFromBackend from '@/api/mock-backend/employees.json'
+import dataFromBackend from '@/backend/employees.json'
 
 export const fetchEmployeesData = () => {
   return new Promise<Employee[]>(res => {

@@ -21,9 +21,9 @@ export const FilterByRole = () => {
         </Trigger>
         <Portal>
           <Content align={'end'} className={s.dropdownContent} side={'bottom'}>
-            <FilterItem itemRole={'waiter'} selectedEmployeesRole={selectedEmployeesRole} />
-            <FilterItem itemRole={'driver'} selectedEmployeesRole={selectedEmployeesRole} />
-            <FilterItem itemRole={'cook'} selectedEmployeesRole={selectedEmployeesRole} />
+            <FilterItem itemRole={'официант'} selectedEmployeesRole={selectedEmployeesRole} />
+            <FilterItem itemRole={'водитель'} selectedEmployeesRole={selectedEmployeesRole} />
+            <FilterItem itemRole={'повар'} selectedEmployeesRole={selectedEmployeesRole} />
           </Content>
         </Portal>
       </Root>
@@ -50,13 +50,13 @@ const FilterItem = ({ itemRole, selectedEmployeesRole }: FilterItemProps) => {
   let itemLabel = ''
 
   switch (itemRole) {
-    case 'waiter':
+    case 'официант':
       itemLabel = 'Официанты'
       break
-    case 'driver':
+    case 'водитель':
       itemLabel = 'Водители'
       break
-    case 'cook':
+    case 'повар':
       itemLabel = 'Повара'
       break
     default:
