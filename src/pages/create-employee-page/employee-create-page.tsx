@@ -5,7 +5,7 @@ import { Loader } from '@/components/loader/loader'
 
 import s from './create-employee-page.module.scss'
 
-export const CreateEmployeePage = () => {
+export const EmployeeCreatePage = () => {
   const { loading } = useAppSelector(state => state.employees)
 
   return (

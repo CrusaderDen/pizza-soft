@@ -1,6 +1,6 @@
 import { EmployeesTable } from '@/features/employees-table/employees-table'
 
-export const EmployeeInfoPage = () => {
+export const EmployeesTablePage = () => {
   return (
     <>
       <p style={{ left: '-9999px', position: 'absolute' }}>

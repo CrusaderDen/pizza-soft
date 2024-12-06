@@ -32,8 +32,10 @@ export const appSlice = createSlice({
       })
       .addCase(fetchEmployeesThunk.fulfilled, (state, action) => {
         state.loading = false
-        state.employees = action.payload
-        state.filteredEmployees = action.payload
+        state.employees = [...action.payload].sort((a: Employee, b: Employee) => {
+          return a.role > b.role ? 1 : -1
+        })
+        state.filteredEmployees = state.employees
       })
       .addCase(fetchEmployeesThunk.rejected, (state, action) => {
         state.loading = false
@@ -84,16 +86,19 @@ export const appSlice = createSlice({
   name: 'appSlice',
   reducers: {
     applyFilters: (state, action) => {
-      //action = {type: add/remove/clear, filterValue: cook/waiter/driver/archive}
-      if (action.payload.type === 'add') {
+      //action = {action: add/remove/clear, filterValue: cook/waiter/driver/archive}
+      if (action.payload.action === 'add') {
         state.activeFilters.push(action.payload.filterValue)
       }
-      if (action.payload.type === 'remove') {
+      if (action.payload.action === 'replace') {
+        state.activeFilters = action.payload.filterValue
+      }
+      if (action.payload.action === 'remove') {
         state.activeFilters = state.activeFilters.filter(
           filter => filter !== action.payload.filterValue
         )
       }
-      if (action.payload.type === 'clear') {
+      if (action.payload.action === 'clear') {
         state.activeFilters.length = 0
       }
     },

@@ -1,14 +1,15 @@
 import { useEffect } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Outlet, useSearchParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
-import { fetchEmployeesThunk } from '@/app/app-slice'
+import { applyFilters, fetchEmployeesThunk } from '@/app/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/hooks'
 import { MainLayout } from '@/layouts/main-layout/main-layout'
 import { Sidebar } from '@/layouts/sidebar/sidebar'
-import { EmployeeInfoPage } from '@/pages/employees-info-page/employees-info-page'
 
 import 'react-toastify/dist/ReactToastify.css'
+
+let firstRenderFlag = true
 
 function App() {
   const dispatch = useAppDispatch()
@@ -16,6 +17,12 @@ function App() {
   const [searchParams] = useSearchParams()
 
   useEffect(() => {
+    if (firstRenderFlag && searchParams.size) {
+      firstRenderFlag = false
+      const activeFiltersArr = searchParams.get('f')?.split(',')
+
+      dispatch(applyFilters({ action: 'replace', filterValue: activeFiltersArr }))
+    }
     dispatch(fetchEmployeesThunk(searchParams.size ? { filters: searchParams.get('f') } : ''))
   }, [dispatch, activeFilters, searchParams])
 
@@ -23,8 +30,7 @@ function App() {
     <>
       <Sidebar />
       <MainLayout>
-        <EmployeeInfoPage />
-        {/*<Outlet />*/}
+        <Outlet />
       </MainLayout>
       <ToastContainer />
     </>

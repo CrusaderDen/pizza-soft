@@ -1,31 +1,23 @@
-import { Navigate, createBrowserRouter, useLocation } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
 
 import App from '@/app/App'
 import { PATHS } from '@/common/paths'
-import { CreateEmployeePage } from '@/pages/create-employee-page/create-employee-page'
-import { EmployeeInfoPage } from '@/pages/employees-info-page/employees-info-page'
-
-const RedirectWithQuery = () => {
-  const location = useLocation()
-
-  console.log(location)
-
-  return <Navigate to={`${PATHS.TABLE}${location.search}`} />
-}
+import { EmployeeCreatePage } from '@/pages/create-employee-page/employee-create-page'
+import { EmployeesTablePage } from '@/pages/employees-info-page/employees-info-page'
 
 export const router = createBrowserRouter([
   {
     children: [
       {
-        element: <RedirectWithQuery />,
+        element: <EmployeesTablePage />,
         path: '/',
       },
       {
-        element: <CreateEmployeePage />,
+        element: <EmployeeCreatePage />,
         path: PATHS.CREATE_EMPLOYEE,
       },
       {
-        element: <EmployeeInfoPage />,
+        element: <EmployeesTablePage />,
         path: PATHS.TABLE,
       },
     ],

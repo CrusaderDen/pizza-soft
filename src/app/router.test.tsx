@@ -4,8 +4,8 @@ import { MemoryRouter, Navigate, Route, Routes } from 'react-router-dom'
 import App from '@/app/App'
 import employeesReducer from '@/app/app-slice'
 import { PATHS } from '@/common/paths'
-import { CreateEmployeePage } from '@/pages/create-employee-page/create-employee-page'
-import { EmployeeInfoPage } from '@/pages/employees-info-page/employees-info-page'
+import { EmployeeCreatePage } from '@/pages/create-employee-page/employee-create-page'
+import { EmployeesTablePage } from '@/pages/employees-info-page/employees-info-page'
 import { configureStore } from '@reduxjs/toolkit'
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
@@ -23,7 +23,7 @@ describe('Router', () => {
         <MemoryRouter initialEntries={[PATHS.CREATE_EMPLOYEE]}>
           <Routes>
             <Route element={<App />} path={'/'}>
-              <Route element={<CreateEmployeePage />} path={PATHS.CREATE_EMPLOYEE} />
+              <Route element={<EmployeeCreatePage />} path={PATHS.CREATE_EMPLOYEE} />
             </Route>
           </Routes>
         </MemoryRouter>
@@ -42,7 +42,7 @@ describe('Router', () => {
         <MemoryRouter initialEntries={[PATHS.TABLE]}>
           <Routes>
             <Route element={<App />} path={'/'}>
-              <Route element={<EmployeeInfoPage />} path={PATHS.TABLE} />
+              <Route element={<EmployeesTablePage />} path={PATHS.TABLE} />
             </Route>
           </Routes>
         </MemoryRouter>
@@ -62,7 +62,7 @@ describe('Router', () => {
           <Routes>
             <Route element={<App />} path={'/'}>
               <Route element={<Navigate to={PATHS.TABLE} />} path={'/'} />
-              <Route element={<EmployeeInfoPage />} path={PATHS.TABLE} />
+              <Route element={<EmployeesTablePage />} path={PATHS.TABLE} />
             </Route>
           </Routes>
         </MemoryRouter>
@@ -82,7 +82,7 @@ describe('Router', () => {
           <Routes>
             <Route element={<App />} path={'/'}>
               <Route element={<Navigate to={PATHS.TABLE} />} path={'*'} />
-              <Route element={<EmployeeInfoPage />} path={PATHS.TABLE} />
+              <Route element={<EmployeesTablePage />} path={PATHS.TABLE} />
             </Route>
           </Routes>
         </MemoryRouter>

@@ -58,8 +58,8 @@ const FilterItem = ({ role }: FilterItemProps) => {
     const isChecked = e.currentTarget.checked
 
     isChecked
-      ? dispatch(applyFilters({ filterValue: role, type: 'add' }))
-      : dispatch(applyFilters({ filterValue: role, type: 'remove' }))
+      ? dispatch(applyFilters({ action: 'add', filterValue: role }))
+      : dispatch(applyFilters({ action: 'remove', filterValue: role }))
   }
 
   let label = ''
@@ -97,7 +97,7 @@ const FilterItem = ({ role }: FilterItemProps) => {
 const SelectClearBtn = () => {
   const dispatch = useAppDispatch()
 
-  const clearActiveFilter = () => dispatch(applyFilters({ type: 'clear' }))
+  const clearActiveFilter = () => dispatch(applyFilters({ action: 'clear' }))
 
   return (
     <button className={s.filterIndicator} onClick={clearActiveFilter} type={'button'}>

@@ -27,8 +27,8 @@ export const FiltersSection = () => {
     const isChecked = e.currentTarget.checked
 
     isChecked
-      ? dispatch(applyFilters({ filterValue: 'archived', type: 'add' }))
-      : dispatch(applyFilters({ filterValue: 'archived', type: 'remove' }))
+      ? dispatch(applyFilters({ action: 'add', filterValue: 'archived' }))
+      : dispatch(applyFilters({ action: 'remove', filterValue: 'archived' }))
   }
 
   return (
