@@ -4,7 +4,7 @@ export type Employee = {
   isArchive: boolean
   name: string
   phone: string
-  role: Role
+  role: string
 }
 
 export type Role = 'cook' | 'driver' | 'waiter'

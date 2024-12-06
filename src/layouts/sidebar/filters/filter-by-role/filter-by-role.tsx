@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import { Role } from '@/api/app-api.types'
 import { applyFilters } from '@/app/app-slice'
@@ -42,22 +42,16 @@ type FilterItemProps = {
 const FilterItem = ({ role }: FilterItemProps) => {
   const dispatch = useAppDispatch()
   const activeFilters = useAppSelector(state => state.employees.activeFilters)
-  const location = useLocation()
-  const navigate = useNavigate()
+  const [_, setSearchParams] = useSearchParams()
 
   useEffect(() => {
-    const filtersString = activeFilters.join(',')
-    const searchParams = new URLSearchParams(location.search)
+    if (activeFilters.length > 0) {
+      const filtersString = activeFilters.join(',')
 
-    searchParams.set('f', filtersString)
-    navigate(
-      activeFilters.length > 0
-        ? {
-            pathname: location.pathname,
-            search: searchParams.toString(),
-          }
-        : { pathname: location.pathname }
-    )
+      setSearchParams({ f: filtersString })
+    } else {
+      setSearchParams()
+    }
   }, [activeFilters])
 
   const handleChangeSelectedRoles = (e: any, role: Role) => {

@@ -26,16 +26,16 @@ const initialState: EmployeeState = {
 export const appSlice = createSlice({
   extraReducers: builder => {
     builder
-      .addCase(fetchEmployees.pending, state => {
-        state.loading = true
+      .addCase(fetchEmployeesThunk.pending, state => {
+        // state.loading = true
         state.error = null
       })
-      .addCase(fetchEmployees.fulfilled, (state, action) => {
+      .addCase(fetchEmployeesThunk.fulfilled, (state, action) => {
         state.loading = false
         state.employees = action.payload
         state.filteredEmployees = action.payload
       })
-      .addCase(fetchEmployees.rejected, (state, action) => {
+      .addCase(fetchEmployeesThunk.rejected, (state, action) => {
         state.loading = false
         state.error = action.error.message || 'Failed to fetch employees'
       })
@@ -84,7 +84,7 @@ export const appSlice = createSlice({
   name: 'appSlice',
   reducers: {
     applyFilters: (state, action) => {
-      //{type: add/remove/clear, filterValue: cook/waiter/driver/archive}
+      //action = {type: add/remove/clear, filterValue: cook/waiter/driver/archive}
       if (action.payload.type === 'add') {
         state.activeFilters.push(action.payload.filterValue)
       }
@@ -96,9 +96,6 @@ export const appSlice = createSlice({
       if (action.payload.type === 'clear') {
         state.activeFilters.length = 0
       }
-      // state.filteredEmployees = state.employees.filter(employee =>
-      //   state.activeFilters.includes(employee.role)
-      // )
     },
     setEmployees: (state, action) => {
       state.employees = action.payload
@@ -107,21 +104,20 @@ export const appSlice = createSlice({
 })
 
 //получаем сотрудников, здесь был бы GET-запрос
-export const fetchEmployees = createAppAsyncThunk('employees/fetchEmployees', async () => {
-  if (!sessionStorage.getItem('employeesList')) {
-    const response = await fetchEmployeesData()
+export const fetchEmployeesThunk = createAppAsyncThunk(
+  'employees/fetchEmployeesThunk',
+  async (query: any) => {
+    const response = await fetchEmployeesData(query)
 
-    sessionStorage.setItem('employeesList', JSON.stringify(response))
+    return response
   }
-
-  return JSON.parse(sessionStorage.getItem('employeesList') || '')
-})
+)
 
 //Создаем нового сотрудника, здесь был бы POST-запрос
 export const addEmployee = createAppAsyncThunk(
   'employees/addEmployee',
   async (newEmployee: Omit<Employee, 'id'>) => {
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise(resolve => setTimeout(resolve, 300))
 
     return newEmployee
   }
