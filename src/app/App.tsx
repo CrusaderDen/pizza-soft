@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   const dispatch = useAppDispatch()
-  const { employees } = useAppSelector(state => state.employees)
+  const employees = useAppSelector(state => state.employees.employees)
 
   useEffect(() => {
     if (employees && employees.length === 0) {

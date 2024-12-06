@@ -4,6 +4,7 @@ import { createAppAsyncThunk } from '@/app/withTypes'
 import { createSlice } from '@reduxjs/toolkit'
 
 type EmployeeState = {
+  activeFilters: string[]
   employees: Employee[]
   error: null | string
   filteredEmployees: Employee[]
@@ -13,6 +14,7 @@ type EmployeeState = {
 }
 
 const initialState: EmployeeState = {
+  activeFilters: [],
   employees: [],
   error: null,
   filteredEmployees: [],
@@ -81,22 +83,25 @@ export const appSlice = createSlice({
   initialState,
   name: 'appSlice',
   reducers: {
+    applyFilters: (state, action) => {
+      //{type: add/remove/clear, filterValue: cook/waiter/driver/archive}
+      if (action.payload.type === 'add') {
+        state.activeFilters.push(action.payload.filterValue)
+      }
+      if (action.payload.type === 'remove') {
+        state.activeFilters = state.activeFilters.filter(
+          filter => filter !== action.payload.filterValue
+        )
+      }
+      if (action.payload.type === 'clear') {
+        state.activeFilters.length = 0
+      }
+      // state.filteredEmployees = state.employees.filter(employee =>
+      //   state.activeFilters.includes(employee.role)
+      // )
+    },
     setEmployees: (state, action) => {
       state.employees = action.payload
-    },
-    setSelectedEmployeesRole: (state, action) => {
-      state.selectedEmployeesRole = action.payload
-      if (!action.payload.length) {
-        state.filteredEmployees = state.employees
-
-        return
-      }
-      state.filteredEmployees = state.employees.filter(employee =>
-        action.payload.includes(employee.role)
-      )
-    },
-    setSelectedEmployeesStatus: (state, action) => {
-      state.selectedEmployeesStatus = action.payload
     },
   },
 })
@@ -142,7 +147,6 @@ export const deleteEmployee = createAppAsyncThunk(
   }
 )
 
-export const { setEmployees, setSelectedEmployeesRole, setSelectedEmployeesStatus } =
-  appSlice.actions
+export const { applyFilters, setEmployees } = appSlice.actions
 
 export default appSlice.reducer

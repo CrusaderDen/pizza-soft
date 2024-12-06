@@ -8,7 +8,7 @@ import s from './sidebar.module.scss'
 
 export const Sidebar = () => {
   const location = useLocation()
-  const currentPath = location.pathname
+  const currentPath = location.search
 
   return (
     <div className={s.sidebar}>
