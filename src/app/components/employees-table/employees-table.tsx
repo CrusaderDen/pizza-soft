@@ -1,11 +1,11 @@
 import { Fragment } from 'react'
 
-import { deleteEmployee } from '@/app/app-slice'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { notifyError, notifySuccess } from '@/common/toastConfig'
-import { Loader } from '@/components/loader/loader'
-import { EditEmployeeDialog } from '@/features/edit-employee-dialog/edit-employee-dialog'
-import { useSort } from '@/features/employees-table/hooks/useSort'
+import { EditEmployeeDialog } from '@/app/components/edit-employee-dialog/edit-employee-dialog'
+import { Loader } from '@/app/components/loader/loader'
+import { useSort } from '@/app/hooks/useSort'
+import { deleteEmployee } from '@/app/store/app-slice'
+import { useAppDispatch, useAppSelector } from '@/app/store/store'
+import { notifyError, notifySuccess } from '@/utils/toastConfig'
 import clsx from 'clsx'
 
 import s from './employees-table.module.scss'

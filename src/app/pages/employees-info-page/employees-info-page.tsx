@@ -1,4 +1,4 @@
-import { EmployeesTable } from '@/features/employees-table/employees-table'
+import { EmployeesTable } from '@/app/components/employees-table/employees-table'
 
 export const EmployeesTablePage = () => {
   return (

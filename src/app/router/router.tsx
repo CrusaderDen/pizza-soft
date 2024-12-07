@@ -1,9 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import App from '@/app/App'
-import { PATHS } from '@/common/paths'
-import { EmployeeCreatePage } from '@/pages/create-employee-page/employee-create-page'
-import { EmployeesTablePage } from '@/pages/employees-info-page/employees-info-page'
+import { EmployeeCreatePage } from '@/app/pages/create-employee-page/employee-create-page'
+import { EmployeesTablePage } from '@/app/pages/employees-info-page/employees-info-page'
+import { PATHS } from '@/app/router/paths'
 
 export const router = createBrowserRouter([
   {

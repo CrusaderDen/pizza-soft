@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux'
 import { RouterProvider } from 'react-router-dom'
 
-import { router } from '@/app/router'
-import { store } from '@/app/store'
+import { router } from '@/app/router/router'
+import { store } from '@/app/store/store'
 import { createRoot } from 'react-dom/client'
 
-import './index.css'
+import './main.css'
 
 createRoot(document.getElementById('root')!).render(
   <Provider store={store}>

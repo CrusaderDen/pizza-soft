@@ -1,7 +1,7 @@
-import { addEmployee } from '@/app/app-slice'
-import { useAppSelector } from '@/app/hooks'
-import { EmployeeForm } from '@/components/employee-form/employee-form'
-import { Loader } from '@/components/loader/loader'
+import { EmployeeForm } from '@/app/components/employee-form/employee-form'
+import { Loader } from '@/app/components/loader/loader'
+import { addEmployee } from '@/app/store/app-slice'
+import { useAppSelector } from '@/app/store/store'
 
 import s from './create-employee-page.module.scss'
 

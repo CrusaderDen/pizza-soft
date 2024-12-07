@@ -1,7 +1,12 @@
-import { fetchEmployeesData } from '@/api/app-api'
+import { api } from '@/api/app-api'
 import { Employee, Role } from '@/api/app-api.types'
-import { createAppAsyncThunk } from '@/app/withTypes'
-import { createSlice } from '@reduxjs/toolkit'
+import { AppDispatch, RootState } from '@/app/store/store'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
+export const createAppAsyncThunk = createAsyncThunk.withTypes<{
+  dispatch: AppDispatch
+  state: RootState
+}>()
 
 type EmployeeState = {
   activeFilters: string[]
@@ -112,7 +117,7 @@ export const appSlice = createSlice({
 export const fetchEmployeesThunk = createAppAsyncThunk(
   'employees/fetchEmployeesThunk',
   async (query: any) => {
-    const response = await fetchEmployeesData(query)
+    const response = await api.fetchEmployeesData(query)
 
     return response
   }

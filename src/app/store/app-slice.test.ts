@@ -1,6 +1,4 @@
 import { Role } from '@/api/app-api.types'
-import { describe, expect, it } from 'vitest'
-
 import reducer, {
   addEmployee,
   deleteEmployee,
@@ -9,7 +7,8 @@ import reducer, {
   setSelectedEmployeesRole,
   setSelectedEmployeesStatus,
   updateEmployee,
-} from './app-slice'
+} from 'app/store/app-slice'
+import { describe, expect, it } from 'vitest'
 
 describe('app-slice', () => {
   const initialState = {

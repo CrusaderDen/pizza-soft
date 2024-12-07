@@ -3,12 +3,12 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { Employee } from '@/api/app-api.types'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { PATHS } from '@/common/paths'
-import { notifyError, notifySuccess } from '@/common/toastConfig'
-import { FormButton } from '@/components/employee-form/form-button/form-button'
-import { customValidator } from '@/components/employee-form/form-input/custom-validator'
-import { FormInput } from '@/components/employee-form/form-input/form-input'
+import { FormButton } from '@/app/components/employee-form/form-button/form-button'
+import { customValidator } from '@/app/components/employee-form/form-input/custom-validator'
+import { FormInput } from '@/app/components/employee-form/form-input/form-input'
+import { PATHS } from '@/app/router/paths'
+import { useAppDispatch, useAppSelector } from '@/app/store/store'
+import { notifyError, notifySuccess } from '@/utils/toastConfig'
 
 import s from './employee-form.module.scss'
 

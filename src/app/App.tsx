@@ -2,10 +2,10 @@ import { useEffect } from 'react'
 import { Outlet, useSearchParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
-import { applyFilters, fetchEmployeesThunk } from '@/app/app-slice'
-import { useAppDispatch, useAppSelector } from '@/app/hooks'
-import { MainLayout } from '@/layouts/main-layout/main-layout'
-import { Sidebar } from '@/layouts/sidebar/sidebar'
+import { MainLayout } from '@/app/layouts/main-layout/main-layout'
+import { Sidebar } from '@/app/layouts/sidebar/sidebar'
+import { applyFilters, fetchEmployeesThunk } from '@/app/store/app-slice'
+import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
 import 'react-toastify/dist/ReactToastify.css'
 
