@@ -1,16 +1,16 @@
 import { useState } from 'react'
 
-import { EmployeeForm } from '@/app/components/employee-form/employee-form'
+import { FormEmployee } from '@/app/shared/form-employee/form-employee'
 import { updateEmployee } from '@/app/store/app-slice'
 import * as Dialog from '@radix-ui/react-dialog'
 
-import s from './edit-employee-dialog.module.scss'
+import s from './edit-employee.module.scss'
 
 type EditDialogProps = {
   id: number
 }
 
-export const EditEmployeeDialog = ({ id }: EditDialogProps) => {
+export const EditEmployee = ({ id }: EditDialogProps) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -21,7 +21,7 @@ export const EditEmployeeDialog = ({ id }: EditDialogProps) => {
         <Dialog.Content className={s.content}>
           <Dialog.Title> </Dialog.Title>
           <Dialog.Description> </Dialog.Description>
-          <EmployeeForm
+          <FormEmployee
             dispatchVariant={updateEmployee}
             id={id}
             setOpen={setOpen}

@@ -1,5 +1,5 @@
-import { EmployeeForm } from '@/app/components/employee-form/employee-form'
-import { Loader } from '@/app/components/loader/loader'
+import { FormEmployee } from '@/app/shared/form-employee/form-employee'
+import { Loader } from '@/app/shared/loader/loader'
 import { addEmployee } from '@/app/store/app-slice'
 import { useAppSelector } from '@/app/store/store'
 
@@ -14,7 +14,7 @@ export const EmployeeCreatePage = () => {
         Уникальный текст для прохождения тестов на рендер CreateEmployeePage
       </p>
       {loading && <Loader />}
-      <EmployeeForm dispatchVariant={addEmployee} typeForm={'create-employee-page'} />
+      <FormEmployee dispatchVariant={addEmployee} typeForm={'create-employee-page'} />
     </div>
   )
 }

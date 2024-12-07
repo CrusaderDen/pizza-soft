@@ -3,14 +3,14 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
 import { Employee } from '@/api/app-api.types'
-import { FormButton } from '@/app/components/employee-form/form-button/form-button'
-import { customValidator } from '@/app/components/employee-form/form-input/custom-validator'
-import { FormInput } from '@/app/components/employee-form/form-input/form-input'
 import { PATHS } from '@/app/router/paths'
+import { FormEmployeeButton } from '@/app/shared/form-employee/form-employee-button/form-employee-button'
+import { FormEmployeeInput } from '@/app/shared/form-employee/form-employee-input/form-employee-input'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
+import { customValidator } from '@/utils/custom-validator'
 import { notifyError, notifySuccess } from '@/utils/toastConfig'
 
-import s from './employee-form.module.scss'
+import s from './form-employee.module.scss'
 
 type EmployeeFormProps = {
   dispatchVariant: any
@@ -18,7 +18,7 @@ type EmployeeFormProps = {
   setOpen?: (open: boolean) => void
   typeForm: 'create-employee-page' | 'edit-form'
 }
-export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: EmployeeFormProps) => {
+export const FormEmployee = ({ dispatchVariant, id, setOpen, typeForm }: EmployeeFormProps) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const { employees } = useAppSelector(state => state.employees)
@@ -95,14 +95,14 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
       <span className={s.title}>
         {typeForm === 'create-employee-page' ? 'Добавить сотрудника' : 'Редактировать'}
       </span>
-      <FormInput
+      <FormEmployeeInput
         className={s.formInput}
         control={control}
         label={'Имя'}
         name={'name'}
         validateError={validateError}
       />
-      <FormInput
+      <FormEmployeeInput
         className={s.formInput}
         control={control}
         label={'Телефон'}
@@ -112,7 +112,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         type={'tel'}
         validateError={validateError}
       />
-      <FormInput
+      <FormEmployeeInput
         className={s.formInput}
         control={control}
         label={'Должность'}
@@ -120,7 +120,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         type={'role'}
         validateError={validateError}
       />
-      <FormInput
+      <FormEmployeeInput
         className={s.formInput}
         control={control}
         label={'Дата рождения'}
@@ -130,7 +130,7 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         type={'tel'}
         validateError={validateError}
       />
-      <FormInput
+      <FormEmployeeInput
         className={s.formCheckbox}
         control={control}
         label={'Архив'}
@@ -139,12 +139,12 @@ export const EmployeeForm = ({ dispatchVariant, id, setOpen, typeForm }: Employe
         validateError={validateError}
       />
       <div className={s.buttonWrapper}>
-        <FormButton disabled={isButtonDisabled} type={'submit'}>
+        <FormEmployeeButton disabled={isButtonDisabled} type={'submit'}>
           {typeForm === 'create-employee-page' ? 'Создать' : 'Сохранить изменения'}
-        </FormButton>
-        <FormButton onClick={handleEscape} type={'button'}>
+        </FormEmployeeButton>
+        <FormEmployeeButton onClick={handleEscape} type={'button'}>
           Отмена
-        </FormButton>
+        </FormEmployeeButton>
       </div>
     </form>
   )

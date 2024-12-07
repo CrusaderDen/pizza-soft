@@ -2,7 +2,7 @@ import { Ref, useId } from 'react'
 import { Control, useController } from 'react-hook-form'
 import InputMask from 'react-input-mask'
 
-import s from './form-input.module.scss'
+import s from './form-employee-input.module.scss'
 
 type FormInputProps = {
   className?: string
@@ -16,7 +16,7 @@ type FormInputProps = {
   validateError?: Record<string, string>
 }
 
-export const FormInput = (props: FormInputProps) => {
+export const FormEmployeeInput = (props: FormInputProps) => {
   const {
     className,
     control,

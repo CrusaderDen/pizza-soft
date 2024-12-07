@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
 
-import { EditEmployeeDialog } from '@/app/components/edit-employee-dialog/edit-employee-dialog'
-import { Loader } from '@/app/components/loader/loader'
+import { EditEmployee } from '@/app/components/edit-employee/edit-employee'
 import { useSort } from '@/app/hooks/useSort'
+import { Loader } from '@/app/shared/loader/loader'
 import { deleteEmployee } from '@/app/store/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 import { notifyError, notifySuccess } from '@/utils/toastConfig'
@@ -64,7 +64,7 @@ export const EmployeesTable = () => {
                   <button onClick={() => handleRemoveEmployee(employee.id)}>🗑️</button>
                 </div>
                 <div className={s.gridCell}>
-                  <EditEmployeeDialog id={employee.id} />
+                  <EditEmployee id={employee.id} />
                 </div>
                 <div className={clsx(s.gridCell, s.name)}>{employee.name}</div>
                 <div className={s.gridCell}>{employee.phone}</div>
