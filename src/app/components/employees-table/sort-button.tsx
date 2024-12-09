@@ -1,4 +1,4 @@
-import { SortField, applySort, applySortField, applySortOrder } from '@/app/store/app-slice'
+import { SortField, applySortField, applySortOrder } from '@/app/store/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
 import s from './sort-button.module.scss'

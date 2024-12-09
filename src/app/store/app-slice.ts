@@ -1,6 +1,7 @@
 import { api } from '@/api/app-api'
 import { Employee, Role } from '@/api/app-api.types'
 import { AppDispatch, RootState } from '@/app/store/store'
+import { parseDate } from '@/utils/parse-date'
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 export type SortOrder = 'asc' | 'desc' | 'unselected'
@@ -44,10 +45,10 @@ export const appSlice = createSlice({
       })
       .addCase(fetchEmployeesThunk.fulfilled, (state, action) => {
         state.loading = false
-        state.employees = [...action.payload].sort((a: Employee, b: Employee) => {
-          return a.role > b.role ? 1 : -1
-        })
-        state.filteredEmployees = state.employees
+        state.employees = [...action.payload].sort((a: Employee, b: Employee) =>
+          a.role > b.role ? 1 : -1
+        )
+        state.filteredEmployees = [...state.employees]
       })
       .addCase(fetchEmployeesThunk.rejected, (state, action) => {
         state.loading = false
@@ -120,6 +121,29 @@ export const appSlice = createSlice({
     },
     applySortOrder: (state, action: PayloadAction<SortOrder>) => {
       state.sortOrder = action.payload
+      state.filteredEmployees = [...state.filteredEmployees].sort((a: Employee, b: Employee) => {
+        if (state.sortField === 'name') {
+          if (state.sortOrder === 'asc') {
+            return a.name < b.name ? 1 : -1
+          } else if (state.sortOrder === 'desc') {
+            return a.name > b.name ? 1 : -1
+          } else if (state.sortOrder === 'unselected') {
+            return a.role > b.role ? 1 : -1
+          }
+        }
+
+        if (state.sortField === 'birthday') {
+          if (state.sortOrder === 'asc') {
+            return parseDate(a.birthday) - parseDate(b.birthday)
+          } else if (state.sortOrder === 'desc') {
+            return parseDate(b.birthday) - parseDate(a.birthday)
+          } else if (state.sortOrder === 'unselected') {
+            return a.role > b.role ? 1 : -1
+          }
+        }
+
+        return 0
+      })
     },
     setEmployees: (state, action) => {
       state.employees = action.payload

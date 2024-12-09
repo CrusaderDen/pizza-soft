@@ -46,7 +46,7 @@ export const EmployeesTable = () => {
               <button className={s.sortBtn} onClick={handleNameSort} type={'button'}>
                 {nameSort}
               </button>
-              <SortButton />
+              <SortButton field={'name'} />
             </div>
           </div>
           <div className={s.gridHeader}>Телефон</div>
@@ -56,6 +56,7 @@ export const EmployeesTable = () => {
             <button className={s.sortBtn} onClick={handleBirthdaySort} type={'button'}>
               {birthdaySort}
             </button>
+            <SortButton field={'birthday'} />
           </div>
           <div className={s.gridHeader}>Архив</div>
 
