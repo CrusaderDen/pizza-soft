@@ -1,7 +1,10 @@
 import { api } from '@/api/app-api'
 import { Employee, Role } from '@/api/app-api.types'
 import { AppDispatch, RootState } from '@/app/store/store'
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
+export type SortOrder = 'asc' | 'desc' | 'unselected'
+export type SortField = 'birthday' | 'name' | 'unselected'
 
 export const createAppAsyncThunk = createAsyncThunk.withTypes<{
   dispatch: AppDispatch
@@ -16,6 +19,8 @@ type EmployeeState = {
   loading: boolean
   selectedEmployeesRole: Role[]
   selectedEmployeesStatus: boolean
+  sortField: SortField
+  sortOrder: SortOrder
 }
 
 const initialState: EmployeeState = {
@@ -26,6 +31,8 @@ const initialState: EmployeeState = {
   loading: false,
   selectedEmployeesRole: [],
   selectedEmployeesStatus: false,
+  sortField: 'unselected',
+  sortOrder: 'unselected',
 }
 
 export const appSlice = createSlice({
@@ -91,7 +98,7 @@ export const appSlice = createSlice({
   name: 'appSlice',
   reducers: {
     applyFilters: (state, action) => {
-      //action = {action: add/remove/clear, filterValue: cook/waiter/driver/archive}
+      //payload = {action: add/remove/clear, filterValue: cook/waiter/driver/archive}
       if (action.payload.action === 'add') {
         state.activeFilters.push(action.payload.filterValue)
       }
@@ -106,6 +113,13 @@ export const appSlice = createSlice({
       if (action.payload.action === 'clear') {
         state.activeFilters.length = 0
       }
+    },
+
+    applySortField: (state, action: PayloadAction<SortField>) => {
+      state.sortField = action.payload
+    },
+    applySortOrder: (state, action: PayloadAction<SortOrder>) => {
+      state.sortOrder = action.payload
     },
     setEmployees: (state, action) => {
       state.employees = action.payload
@@ -153,6 +167,6 @@ export const deleteEmployee = createAppAsyncThunk(
   }
 )
 
-export const { applyFilters, setEmployees } = appSlice.actions
+export const { applyFilters, applySortField, applySortOrder, setEmployees } = appSlice.actions
 
 export default appSlice.reducer

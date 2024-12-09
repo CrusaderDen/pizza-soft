@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 
 import { EditEmployee } from '@/app/components/edit-employee/edit-employee'
+import { SortButton } from '@/app/components/employees-table/sort-button'
 import { useSort } from '@/app/hooks/useSort'
 import { Loader } from '@/app/shared/loader/loader'
 import { deleteEmployee } from '@/app/store/app-slice'
@@ -45,6 +46,7 @@ export const EmployeesTable = () => {
               <button className={s.sortBtn} onClick={handleNameSort} type={'button'}>
                 {nameSort}
               </button>
+              <SortButton />
             </div>
           </div>
           <div className={s.gridHeader}>Телефон</div>
