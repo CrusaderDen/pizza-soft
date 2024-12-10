@@ -27,6 +27,6 @@ export const getEmployeesData = (query: any) => {
 
         return res(filteredData)
       }
-    }, 0)
+    }, 1000)
   })
 }

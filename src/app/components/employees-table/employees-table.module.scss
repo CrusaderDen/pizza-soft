@@ -11,51 +11,6 @@
 
 }
 
-.gridHeader {
-  user-select: none;
-
-  position: sticky;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 30px;
-  padding: 5px 10px;
-
-  font-weight: bold;
-
-  background-color: #f0f0f0;
-  outline: 1px solid #ccc;
-}
-
-.sortBtn {
-  padding: 0 15px;
-  font-size: 20px;
-}
-
-.gridCell {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  min-height: 30px;
-  padding: 5px 10px;
-
-  text-align: center;
-
-  background-color: #fff;
-  outline: 1px solid #ccc;
-}
-
-
-@media screen and (width <= 940px) {
-  .gridHeader {
-    height: 40px;
-  }
-}
-
 @media screen and (width <= 720px) {
   .gridTable {
     grid-template-columns: 50px 50px 1fr 1fr 0.6fr 1fr 0.6fr;

@@ -40,7 +40,7 @@ export const appSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchEmployeesThunk.pending, state => {
-        // state.loading = true
+        state.loading = true
         state.error = null
       })
       .addCase(fetchEmployeesThunk.fulfilled, (state, action) => {
@@ -155,9 +155,7 @@ export const appSlice = createSlice({
 export const fetchEmployeesThunk = createAppAsyncThunk(
   'employees/fetchEmployeesThunk',
   async (query: any) => {
-    const response = await api.fetchEmployeesData(query)
-
-    return response
+    return await api.fetchEmployeesData(query)
   }
 )
 

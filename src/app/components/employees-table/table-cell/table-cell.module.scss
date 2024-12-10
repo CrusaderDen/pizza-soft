@@ -1,0 +1,38 @@
+.gridHeader {
+  user-select: none;
+
+  position: sticky;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 30px;
+  padding: 5px 10px;
+
+  font-weight: bold;
+
+  background-color: #f0f0f0;
+  outline: 1px solid #ccc;
+}
+
+.gridContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  min-height: 30px;
+  padding: 5px 10px;
+
+  text-align: center;
+
+  background-color: #fff;
+  outline: 1px solid #ccc;
+}
+
+@media screen and (width <= 940px) {
+  .gridHeader {
+    height: 40px;
+  }
+}

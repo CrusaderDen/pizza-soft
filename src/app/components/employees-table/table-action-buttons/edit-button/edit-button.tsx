@@ -4,13 +4,13 @@ import { FormEmployee } from '@/app/shared/form-employee/form-employee'
 import { updateEmployee } from '@/app/store/app-slice'
 import * as Dialog from '@radix-ui/react-dialog'
 
-import s from './edit-employee.module.scss'
+import s from './edit-button.module.scss'
 
 type EditDialogProps = {
   id: number
 }
 
-export const EditEmployee = ({ id }: EditDialogProps) => {
+export const EditButton = ({ id }: EditDialogProps) => {
   const [open, setOpen] = useState(false)
 
   return (
