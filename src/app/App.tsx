@@ -3,7 +3,6 @@ import { Outlet, useSearchParams } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 
 import { MainLayout } from '@/app/layouts/main-layout/main-layout'
-import { Sidebar } from '@/app/layouts/sidebar/sidebar'
 import { applyFilters, fetchEmployeesThunk } from '@/app/store/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
@@ -27,13 +26,10 @@ function App() {
   }, [dispatch, activeFilters, searchParams])
 
   return (
-    <>
-      <Sidebar />
-      <MainLayout>
-        <Outlet />
-      </MainLayout>
+    <MainLayout>
+      <Outlet />
       <ToastContainer />
-    </>
+    </MainLayout>
   )
 }
 

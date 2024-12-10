@@ -4,7 +4,7 @@
   grid-template-columns: 40px 40px repeat(5, 1fr);
   gap: 1px;
 
-  width: 100%;
+  width: calc(100vw - 250px);
 
   background-color: #ccc;
   border-bottom: 1px solid #ccc;

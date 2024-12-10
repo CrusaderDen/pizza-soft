@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { FilterByRole } from '@/app/layouts/sidebar/filters/filter-by-role/filter-by-role'
+import { FilterByRole } from '@/app/layouts/main-layout/sidebar/filters/filter-by-role/filter-by-role'
 import { applyFilters } from '@/app/store/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
