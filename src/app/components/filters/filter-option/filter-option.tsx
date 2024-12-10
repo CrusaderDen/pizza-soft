@@ -1,20 +1,24 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-import { Role } from '@/api/app-api.types'
+import { FilterRole, Role } from '@/api/app-api.types'
 import { applyFilters } from '@/app/store/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
-import s from './filter-option.module.scss'
+import s from '@/app/components/filters/filter-option/filter-option.module.scss'
 
 type FilterOptionProps = {
   className?: string
-  role: Role
+  role: FilterRole
 }
+
 export const FilterOption = ({ className, role }: FilterOptionProps) => {
   const dispatch = useAppDispatch()
   const activeFilters = useAppSelector(state => state.employees.activeFilters)
   const [_, setSearchParams] = useSearchParams()
+
+  const optionRole = role[0]
+  const optionLabel = role[1]
 
   useEffect(() => {
     if (activeFilters.length > 0) {
@@ -34,35 +38,16 @@ export const FilterOption = ({ className, role }: FilterOptionProps) => {
       : dispatch(applyFilters({ action: 'remove', filterValue: role }))
   }
 
-  let label = ''
-
-  switch (role) {
-    case 'waiter':
-      label = 'Официанты'
-      break
-    case 'driver':
-      label = 'Водители'
-      break
-    case 'cook':
-      label = 'Повара'
-      break
-    case 'archived':
-      label = 'в архиве'
-      break
-    default:
-      console.log('Error with employees filter item label')
-  }
-
   return (
     <div className={className ? className : ''}>
       <input
-        checked={activeFilters.includes(role)}
+        checked={activeFilters.includes(optionRole)}
         className={s.dropdownItem__input}
-        id={role}
-        onChange={e => handleChangeSelectedRoles(e, role)}
+        id={optionRole}
+        onChange={e => handleChangeSelectedRoles(e, optionRole)}
         type={'checkbox'}
       />
-      <label htmlFor={role}>{label}</label>
+      <label htmlFor={optionRole}>{optionLabel}</label>
     </div>
   )
 }

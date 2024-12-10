@@ -8,3 +8,5 @@ export type Employee = {
 }
 
 export type Role = 'archived' | 'cook' | 'driver' | 'waiter'
+
+export type FilterRole = [Role, string]

@@ -19,7 +19,9 @@ function App() {
     if (firstRenderFlag && searchParams.size) {
       firstRenderFlag = false
       const activeFiltersArr = searchParams.get('f')?.split(',')
+      const activeSortArr = searchParams.get('sort')?.split(',')
 
+      console.log(activeSortArr)
       dispatch(applyFilters({ action: 'replace', filterValue: activeFiltersArr }))
     }
     dispatch(fetchEmployeesThunk(searchParams.size ? { filters: searchParams.get('f') } : ''))
