@@ -6,7 +6,7 @@ import { FilterDropdown } from '@/app/components/filters/filter-dropdown/filter-
 import { FilterOption } from '@/app/components/filters/filter-option/filter-option'
 import { useAppSelector } from '@/app/store/store'
 
-import s from 'app/layouts/main-layout/sidebar/sidebar-filters/sidebar-filters.module.scss'
+import s from './sidebar-filters.module.scss'
 
 const RolesForDropdown: FilterRole[] = [
   ['waiter', 'Официанты'],
@@ -29,7 +29,7 @@ export const SidebarFilters = () => {
     } else {
       setSearchParams()
     }
-  }, [activeFilters])
+  }, [activeFilters, setSearchParams])
 
   return (
     <fieldset className={s.filtersSetWrapper}>
