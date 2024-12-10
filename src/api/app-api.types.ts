@@ -7,4 +7,4 @@ export type Employee = {
   role: string
 }
 
-export type Role = 'cook' | 'driver' | 'waiter'
+export type Role = 'archived' | 'cook' | 'driver' | 'waiter'

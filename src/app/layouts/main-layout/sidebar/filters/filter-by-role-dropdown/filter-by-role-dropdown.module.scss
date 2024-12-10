@@ -1,11 +1,27 @@
+.filterByRole {
+  position: relative;
+  width: 180px;
+}
+
+.dropdownItem {
+  user-select: none;
+  margin: 10px;
+  padding: 5px;
+
+  &:focus-visible {
+    outline: none;
+  }
+}
 
 .selectTrigger {
   user-select: none;
 
+  position: relative;
+
   display: flex;
   align-items: center;
 
-  width: 100%;
+  width: 180px;
   height: 50px;
   padding: 0 10px;
 
@@ -34,7 +50,6 @@
   }
 }
 
-
 .dropdownContent {
   width: 180px;
   background-color: #eae9e9;
@@ -42,45 +57,6 @@
   border-radius: 5px;
 }
 
-.dropdownItem {
-  user-select: none;
-  margin: 10px;
-  padding: 5px;
-
-  &:focus-visible {
-    outline: none;
-  }
-}
-
-.dropdownItem__input {
-  margin-right: 10px;
-}
-
-
-.filterIndicator {
-  pointer-events: auto !important;
-  user-select: none;
-
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-40%);
-
-  width: 15px;
-  height: 15px;
-
-  line-height: 1;
-
-  background-color: #f11e20;
-  border-radius: 50%;
-
-  transition: transform 0.2s;
-
-
-  &:hover {
-    transform: scale(1.1) translateY(-50%);
-  }
-}
 
 @media screen and (width <= 1400px) {
   .selectTrigger {
