@@ -11,6 +11,12 @@
 
 }
 
+@media screen and (width <= 1400px) {
+  .gridTable {
+    width: 100vw;
+  }
+}
+
 @media screen and (width <= 720px) {
   .gridTable {
     grid-template-columns: 50px 50px 1fr 1fr 0.6fr 1fr 0.6fr;

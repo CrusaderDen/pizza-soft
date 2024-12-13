@@ -1,14 +1,12 @@
 .mainLayoutWrapper {
   position: relative;
   display: flex;
-
-  //justify-content: center;
   margin-left: 250px;
 }
 
 @media screen and (width <= 1400px) {
   .mainLayoutWrapper {
-    align-items: center;
+    flex-direction: column;
     margin-left: 0;
   }
 }

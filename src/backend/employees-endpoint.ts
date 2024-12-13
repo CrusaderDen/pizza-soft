@@ -12,7 +12,6 @@ export const getEmployeesData = (query: any) => {
       } else {
         let activeFilters = query.filters
 
-        // console.log(query)
         activeFilters = activeFilters.replace('waiter', 'официант')
         activeFilters = activeFilters.replace('cook', 'повар')
         activeFilters = activeFilters.replace('driver', 'водитель')
@@ -22,9 +21,6 @@ export const getEmployeesData = (query: any) => {
         const isFilterByRole = rolesToCheck.some(role => activeFiltersArr.includes(role))
         const isFilterByArchived = activeFiltersArr.includes('archived')
 
-        console.log('isArchivedMatched', activeFiltersArr.includes('archived'))
-
-        console.log('isRoleMatched', activeFiltersArr.includes('официант'))
         const filteredData = data.filter(employee => {
           if (activeFiltersArr.length === 0) {
             return true
