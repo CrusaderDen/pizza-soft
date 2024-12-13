@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterRole, Role } from '@/api/app-api.types'
-import { applyFilters } from '@/app/store/app-slice'
+import { setSelectedFilter } from '@/app/store/app-slice'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
 import s from '@/app/components/filters/filter-option/filter-option.module.scss'
@@ -28,14 +28,14 @@ export const FilterOption = ({ className, role }: FilterOptionProps) => {
     } else {
       setSearchParams()
     }
-  }, [activeFilters])
+  }, [activeFilters, setSearchParams])
 
   const handleChangeSelectedRoles = (e: any, role: Role) => {
     const isChecked = e.currentTarget.checked
 
     isChecked
-      ? dispatch(applyFilters({ action: 'add', filterValue: role }))
-      : dispatch(applyFilters({ action: 'remove', filterValue: role }))
+      ? dispatch(setSelectedFilter({ action: 'add', filterValue: role }))
+      : dispatch(setSelectedFilter({ action: 'remove', filterValue: role }))
   }
 
   return (

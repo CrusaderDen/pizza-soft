@@ -1,4 +1,5 @@
-import { SortField, applySortField, applySortOrder } from '@/app/store/app-slice'
+import { setSelectedSortField, setSelectedSortOrder } from '@/app/store/app-slice'
+import { SortField } from '@/app/store/app-slice.types'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
 import s from './sort-button.module.scss'
@@ -21,16 +22,16 @@ export const SortButton = ({ field }: SortButtonProps) => {
   const sortLabel = sortArrows[sortOrder]
 
   const handleSort = () => {
-    dispatch(applySortField(field))
+    dispatch(setSelectedSortField(field))
 
     if (sortOrder === 'unselected') {
-      dispatch(applySortOrder('desc'))
+      dispatch(setSelectedSortOrder('desc'))
     }
     if (sortOrder === 'desc') {
-      dispatch(applySortOrder('asc'))
+      dispatch(setSelectedSortOrder('asc'))
     }
     if (sortOrder === 'asc') {
-      dispatch(applySortOrder('unselected'))
+      dispatch(setSelectedSortOrder('unselected'))
     }
   }
 

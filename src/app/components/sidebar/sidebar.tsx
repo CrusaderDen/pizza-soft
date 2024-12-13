@@ -1,5 +1,5 @@
-import { SidebarFilters } from '@/app/layouts/main-layout/sidebar/sidebar-filters/sidebar-filters'
-import { SidebarLink } from '@/app/layouts/main-layout/sidebar/sidebar-link/sidebar-link'
+import { SidebarFilters } from '@/app/components/sidebar/sidebar-filters/sidebar-filters'
+import { SidebarLink } from '@/app/components/sidebar/sidebar-link/sidebar-link'
 import { PATHS } from '@/app/router/paths'
 
 import s from './sidebar.module.scss'

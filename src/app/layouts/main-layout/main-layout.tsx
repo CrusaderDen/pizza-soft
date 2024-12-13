@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { Sidebar } from '@/app/layouts/main-layout/sidebar/sidebar'
+import { Sidebar } from '@/app/components/sidebar/sidebar'
 
 import s from './main-layout.module.scss'
 

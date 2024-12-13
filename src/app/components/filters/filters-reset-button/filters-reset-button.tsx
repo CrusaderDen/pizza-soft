@@ -1,4 +1,4 @@
-import { applyFilters } from '@/app/store/app-slice'
+import { setSelectedFilter } from '@/app/store/app-slice'
 import { useAppDispatch } from '@/app/store/store'
 import { CloseIcon } from '@/assets/close-icon'
 
@@ -7,7 +7,7 @@ import s from '@/app/components/filters/filters-reset-button/filters-reset-butto
 export const FiltersResetButton = () => {
   const dispatch = useAppDispatch()
 
-  const handler = () => dispatch(applyFilters({ action: 'clear' }))
+  const handler = () => dispatch(setSelectedFilter({ action: 'clear' }))
 
   return (
     <button className={s.filterIndicator} onClick={handler} type={'button'}>

@@ -15,7 +15,7 @@ type FilterDropdownProps = {
 export const FilterDropdown = ({ className, items }: FilterDropdownProps) => {
   const activeFilters = useAppSelector(state => state.employees.activeFilters)
 
-  const filterItems = items.map(item => <FilterItem role={item} />)
+  const filterItems = items.map(item => <FilterItem key={item[0]} role={item} />)
 
   return (
     <div className={className ? className : ''}>

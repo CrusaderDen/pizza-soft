@@ -1,5 +1,5 @@
 import { FormEmployee } from '@/app/shared/form-employee/form-employee'
-import { updateEmployee } from '@/app/store/app-slice'
+import { updateEmployeeThunk } from '@/app/store/app-thunks'
 import * as Dialog from '@radix-ui/react-dialog'
 
 import s from './edit-employee-dialog.module.scss'
@@ -19,7 +19,7 @@ export const EditEmployeeDialog = ({ id, open, setOpen }: EditEmployeeDialogProp
           <Dialog.Title>Редактировать сотрудника</Dialog.Title>
           <Dialog.Description>Заполните данные сотрудника.</Dialog.Description>
           <FormEmployee
-            dispatchVariant={updateEmployee}
+            dispatchVariant={updateEmployeeThunk}
             id={id}
             setOpen={setOpen}
             typeForm={'edit-form'}

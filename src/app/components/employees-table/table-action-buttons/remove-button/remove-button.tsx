@@ -1,4 +1,4 @@
-import { deleteEmployee } from '@/app/store/app-slice'
+import { deleteEmployeeThunk } from '@/app/store/app-thunks'
 import { useAppDispatch } from '@/app/store/store'
 import { notifyError, notifySuccess } from '@/utils/toastConfig'
 
@@ -13,7 +13,7 @@ export const RemoveButton = ({ employeeId }: RemoveButtonProps) => {
 
     if (confirmation) {
       try {
-        await dispatch(deleteEmployee(id))
+        await dispatch(deleteEmployeeThunk(id))
         notifySuccess('Сотрудник успешно удалён из базы')
       } catch (e) {
         notifyError(`Ошибка ${e}. Попробуйте позже или обратитесь в поддержку. `)

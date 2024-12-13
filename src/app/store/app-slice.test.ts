@@ -1,12 +1,10 @@
 import { Role } from '@/api/app-api.types'
+import { addEmployeeThunk, deleteEmployeeThunk, updateEmployeeThunk } from '@/app/store/app-thunks'
 import reducer, {
-  addEmployee,
-  deleteEmployee,
   fetchEmployees,
   setEmployees,
   setSelectedEmployeesRole,
   setSelectedEmployeesStatus,
-  updateEmployee,
 } from 'app/store/app-slice'
 import { describe, expect, it } from 'vitest'
 
@@ -50,7 +48,7 @@ describe('app-slice', () => {
 
   it('should handle addEmployee.fulfilled', () => {
     const newEmployee = { name: 'Jane Doe' }
-    const action = { payload: newEmployee, type: addEmployee.fulfilled.type }
+    const action = { payload: newEmployee, type: addEmployeeThunk.fulfilled.type }
     const state = reducer(initialState, action)
 
     expect(state.employees).toHaveLength(1)
@@ -79,7 +77,7 @@ describe('app-slice', () => {
       phone: '+7 (883) 508-3269',
       role: 'повар',
     }
-    const action = { payload: updatedEmployee, type: updateEmployee.fulfilled.type }
+    const action = { payload: updatedEmployee, type: updateEmployeeThunk.fulfilled.type }
     const state = reducer(initialStateWithEmployees, action)
 
     expect(state.employees[0]).toMatchObject(updatedEmployee)
@@ -99,7 +97,7 @@ describe('app-slice', () => {
         },
       ],
     }
-    const action = { payload: 1, type: deleteEmployee.fulfilled.type }
+    const action = { payload: 1, type: deleteEmployeeThunk.fulfilled.type }
     const state = reducer(initialStateWithEmployees, action)
 
     expect(state.employees).toHaveLength(0)

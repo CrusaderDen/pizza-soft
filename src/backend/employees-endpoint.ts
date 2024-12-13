@@ -1,6 +1,6 @@
 import { Employee } from '@/api/app-api.types'
 
-import dataFromBD from './employees.json'
+import dataFromBD from './employees-db.json'
 
 export const getEmployeesData = (query: any) => {
   return new Promise<Employee[]>(res => {
@@ -12,17 +12,34 @@ export const getEmployeesData = (query: any) => {
       } else {
         let activeFilters = query.filters
 
+        // console.log(query)
         activeFilters = activeFilters.replace('waiter', 'официант')
         activeFilters = activeFilters.replace('cook', 'повар')
         activeFilters = activeFilters.replace('driver', 'водитель')
 
         const activeFiltersArr = activeFilters.split(',')
+        const rolesToCheck = ['официант', 'повар', 'водитель']
+        const isFilterByRole = rolesToCheck.some(role => activeFiltersArr.includes(role))
+        const isFilterByArchived = activeFiltersArr.includes('archived')
 
+        console.log('isArchivedMatched', activeFiltersArr.includes('archived'))
+
+        console.log('isRoleMatched', activeFiltersArr.includes('официант'))
         const filteredData = data.filter(employee => {
-          const term_1 = activeFiltersArr.includes(employee.role)
-          const term_2 = activeFiltersArr.includes('archived') && employee.isArchive
+          if (activeFiltersArr.length === 0) {
+            return true
+          }
 
-          return term_1 || term_2
+          const isRoleMatched = activeFiltersArr.includes(employee.role)
+          const isArchivedMatched = employee.isArchive
+
+          if (isFilterByRole && isFilterByArchived) {
+            return isRoleMatched && isArchivedMatched
+          } else if (isFilterByRole) {
+            return isRoleMatched
+          } else if (isFilterByArchived) {
+            return isArchivedMatched
+          }
         })
 
         return res(filteredData)

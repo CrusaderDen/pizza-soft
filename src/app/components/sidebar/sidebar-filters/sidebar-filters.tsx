@@ -3,7 +3,7 @@ import { FilterOption } from '@/app/components/filters/filter-option/filter-opti
 import {
   RoleForSingleOption,
   RolesForDropdown,
-} from '@/app/layouts/main-layout/sidebar/sidebar-filters/constants/constants'
+} from '@/app/components/sidebar/sidebar-filters/constants/constants'
 
 import s from './sidebar-filters.module.scss'
 

@@ -10,10 +10,10 @@ type SidebarLinkProps = {
 } & PropsWithChildren
 
 export const SidebarLink = ({ children, to }: SidebarLinkProps) => {
-  const { search } = useLocation()
+  const { pathname } = useLocation()
 
   return (
-    <Link className={clsx(s.link, search === to ? s.linkIsActive : '')} to={to}>
+    <Link className={clsx(s.link, pathname === to ? s.linkIsActive : '')} to={to}>
       {children}
     </Link>
   )
