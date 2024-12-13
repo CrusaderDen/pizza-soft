@@ -10,11 +10,9 @@ import { parseDate } from '@/utils/parse-date'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: EmployeeState = {
-  activeFilters: [],
   activeSort: ['unselected', 'unselected'],
   employees: [],
   error: null,
-  filteredEmployees: [],
   loading: false,
   selectedEmployeesRole: [],
   selectedEmployeesStatus: false,
@@ -34,7 +32,6 @@ export const appSlice = createSlice({
         state.employees = [...action.payload].sort((a: Employee, b: Employee) =>
           a.role > b.role ? 1 : -1
         )
-        state.filteredEmployees = [...state.employees]
       })
       .addCase(fetchEmployeesThunk.rejected, (state, action) => {
         state.loading = false
@@ -87,29 +84,12 @@ export const appSlice = createSlice({
     setEmployees: (state, action) => {
       state.employees = action.payload
     },
-    setSelectedFilter: (state, action) => {
-      //payload = {action: add/remove/clear, filterValue: cook/waiter/driver/archive}
-      if (action.payload.action === 'add') {
-        state.activeFilters.push(action.payload.filterValue)
-      }
-      if (action.payload.action === 'replace') {
-        state.activeFilters = action.payload.filterValue
-      }
-      if (action.payload.action === 'remove') {
-        state.activeFilters = state.activeFilters.filter(
-          filter => filter !== action.payload.filterValue
-        )
-      }
-      if (action.payload.action === 'clear') {
-        state.activeFilters.length = 0
-      }
-    },
     setSelectedSortField: (state, action: PayloadAction<SortField>) => {
       state.sortField = action.payload
     },
     setSelectedSortOrder: (state, action: PayloadAction<SortOrder>) => {
       state.sortOrder = action.payload
-      state.filteredEmployees = [...state.filteredEmployees].sort((a: Employee, b: Employee) => {
+      state.employees = [...state.employees].sort((a: Employee, b: Employee) => {
         if (state.sortField === 'name') {
           if (state.sortOrder === 'asc') {
             return a.name < b.name ? 1 : -1
@@ -136,7 +116,6 @@ export const appSlice = createSlice({
   },
 })
 
-export const { setEmployees, setSelectedFilter, setSelectedSortField, setSelectedSortOrder } =
-  appSlice.actions
+export const { setEmployees, setSelectedSortField, setSelectedSortOrder } = appSlice.actions
 
 export default appSlice.reducer

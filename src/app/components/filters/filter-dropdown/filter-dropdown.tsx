@@ -1,7 +1,8 @@
+import { useSearchParams } from 'react-router-dom'
+
 import { FilterRole } from '@/api/app-api.types'
 import { FilterOption } from '@/app/components/filters/filter-option/filter-option'
 import { FiltersResetButton } from '@/app/components/filters/filters-reset-button/filters-reset-button'
-import { useAppSelector } from '@/app/store/store'
 import { ArrowDownIcon } from '@/assets/arrow-down-icon'
 import { Content, Item, Portal, Root, Trigger } from '@radix-ui/react-dropdown-menu'
 
@@ -13,7 +14,7 @@ type FilterDropdownProps = {
 }
 
 export const FilterDropdown = ({ className, items }: FilterDropdownProps) => {
-  const activeFilters = useAppSelector(state => state.employees.activeFilters)
+  const [searchParams] = useSearchParams()
 
   const filterItems = items.map(item => <FilterItem key={item[0]} role={item} />)
 
@@ -30,7 +31,7 @@ export const FilterDropdown = ({ className, items }: FilterDropdownProps) => {
           </Content>
         </Portal>
       </Root>
-      {activeFilters && !!activeFilters.length && <FiltersResetButton />}
+      {searchParams.get('f') && <FiltersResetButton />}
     </div>
   )
 }

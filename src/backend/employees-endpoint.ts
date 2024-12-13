@@ -3,6 +3,8 @@ import { Employee } from '@/api/app-api.types'
 import dataFromBD from './employees-db.json'
 
 export const getEmployeesData = (query: any) => {
+  const delay = Math.random() * 500
+
   return new Promise<Employee[]>(res => {
     setTimeout(() => {
       const data: Employee[] = dataFromBD
@@ -40,6 +42,8 @@ export const getEmployeesData = (query: any) => {
 
         return res(filteredData)
       }
-    }, 300)
+    }, delay)
   })
 }
+
+//Math.random() * 1000

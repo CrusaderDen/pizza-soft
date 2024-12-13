@@ -1,9 +1,8 @@
-import { useEffect } from 'react'
+import { ChangeEvent, forwardRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterRole, Role } from '@/api/app-api.types'
-import { setSelectedFilter } from '@/app/store/app-slice'
-import { useAppDispatch, useAppSelector } from '@/app/store/store'
+import { useFilterSearchParam } from '@/utils/remove-search-param'
 
 import s from '@/app/components/filters/filter-option/filter-option.module.scss'
 
@@ -12,42 +11,34 @@ type FilterOptionProps = {
   role: FilterRole
 }
 
-export const FilterOption = ({ className, role }: FilterOptionProps) => {
-  const dispatch = useAppDispatch()
-  const activeFilters = useAppSelector(state => state.employees.activeFilters)
-  const [_, setSearchParams] = useSearchParams()
+export const FilterOption = forwardRef<HTMLInputElement, FilterOptionProps>(
+  ({ className, role }, ref) => {
+    const [searchParams] = useSearchParams()
+    const { updateSearchParam } = useFilterSearchParam()
 
-  const optionRole = role[0]
-  const optionLabel = role[1]
+    const optionRole = role[0] as Role
+    const optionLabel = role[1]
+    const prevFiltration = searchParams.get('f') || ''
+    const isChecked = prevFiltration?.includes(optionRole) || false
 
-  useEffect(() => {
-    if (activeFilters.length > 0) {
-      const filtersString = activeFilters.join(',')
+    const handleChangeSelectedRoles = (e: ChangeEvent<HTMLInputElement>, role: Role) => {
+      const isChecked = e.currentTarget.checked
 
-      setSearchParams({ f: filtersString })
-    } else {
-      setSearchParams()
+      updateSearchParam({ isChecked, param: 'f', prevFiltration, role })
     }
-  }, [activeFilters, setSearchParams])
 
-  const handleChangeSelectedRoles = (e: any, role: Role) => {
-    const isChecked = e.currentTarget.checked
-
-    isChecked
-      ? dispatch(setSelectedFilter({ action: 'add', filterValue: role }))
-      : dispatch(setSelectedFilter({ action: 'remove', filterValue: role }))
+    return (
+      <div className={className ? className : ''}>
+        <input
+          checked={isChecked}
+          className={s.filter_checkbox}
+          id={optionRole}
+          onChange={e => handleChangeSelectedRoles(e, optionRole)}
+          ref={ref}
+          type={'checkbox'}
+        />
+        <label htmlFor={optionRole}>{optionLabel}</label>
+      </div>
+    )
   }
-
-  return (
-    <div className={className ? className : ''}>
-      <input
-        checked={activeFilters.includes(optionRole)}
-        className={s.dropdownItem__input}
-        id={optionRole}
-        onChange={e => handleChangeSelectedRoles(e, optionRole)}
-        type={'checkbox'}
-      />
-      <label htmlFor={optionRole}>{optionLabel}</label>
-    </div>
-  )
-}
+)
