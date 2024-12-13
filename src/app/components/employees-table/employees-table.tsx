@@ -14,7 +14,11 @@ export const EmployeesTable = () => {
   const { employees, error } = useAppSelector(state => state.employees)
 
   useEffect(() => {
-    dispatch(fetchEmployeesThunk(searchParams.size ? { filters: searchParams.get('f') } : ''))
+    dispatch(
+      fetchEmployeesThunk(
+        searchParams.size ? { filters: searchParams.get('f'), sort: searchParams.get('sort') } : ''
+      )
+    )
   }, [dispatch, searchParams])
 
   if (error) {

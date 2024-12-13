@@ -12,12 +12,9 @@ export const createAppAsyncThunk = createAsyncThunk.withTypes<{
 }>()
 
 export type EmployeeState = {
-  activeSort: [SortField, SortOrder]
   employees: Employee[]
   error: null | string
   loading: boolean
   selectedEmployeesRole: Role[]
   selectedEmployeesStatus: boolean
-  sortField: SortField
-  sortOrder: SortOrder
 }

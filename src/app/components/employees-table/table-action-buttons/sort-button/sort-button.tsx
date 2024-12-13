@@ -1,37 +1,41 @@
-import { setSelectedSortField, setSelectedSortOrder } from '@/app/store/app-slice'
+import { useSearchParams } from 'react-router-dom'
+
 import { SortField } from '@/app/store/app-slice.types'
-import { useAppDispatch, useAppSelector } from '@/app/store/store'
 
 import s from './sort-button.module.scss'
 
-type SortArrows = Record<'asc' | 'desc' | 'unselected', string>
+type SortOrder = '' | 'asc' | 'desc'
 
-const sortArrows: SortArrows = {
-  asc: '↑',
-  desc: '↓',
-  unselected: '↕',
-}
+type SortArrows = Record<SortOrder, string>
 
 type SortButtonProps = {
   field: SortField
 }
 
+const sortArrows: SortArrows = {
+  '': '↕',
+  asc: '↑',
+  desc: '↓',
+}
+
 export const SortButton = ({ field }: SortButtonProps) => {
-  const dispatch = useAppDispatch()
-  const sortOrder = useAppSelector(state => state.employees.sortOrder)
-  const sortLabel = sortArrows[sortOrder]
+  const [searchParams, setSearchParams] = useSearchParams()
+  const sortParams = searchParams.get('sort')?.split(',') || ''
+  const sortField = sortParams[0]
+  const sortOrder = sortParams[1] || ''
+  const sortLabel = sortField === field ? sortArrows[sortOrder as SortOrder] : sortArrows['']
 
   const handleSort = () => {
-    dispatch(setSelectedSortField(field))
+    setSearchParams({ sort: [field, sortOrder].join(',') })
 
-    if (sortOrder === 'unselected') {
-      dispatch(setSelectedSortOrder('desc'))
+    if (sortOrder === '') {
+      setSearchParams({ sort: [field, 'desc'].join(',') })
     }
     if (sortOrder === 'desc') {
-      dispatch(setSelectedSortOrder('asc'))
+      setSearchParams({ sort: [field, 'asc'].join(',') })
     }
     if (sortOrder === 'asc') {
-      dispatch(setSelectedSortOrder('unselected'))
+      setSearchParams({ sort: [field].toString() })
     }
   }
 
