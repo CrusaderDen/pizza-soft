@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 
 import App from '@/app/App'
 import { EmployeeCreatePage } from '@/app/pages/create-employee-page/employee-create-page'
@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
   {
     children: [
       {
-        element: <EmployeesTablePage />,
+        element: <Navigate to={PATHS.TABLE} />,
         path: '/',
       },
       {

@@ -3,14 +3,14 @@ import { useSearchParams } from 'react-router-dom'
 
 import { TableContent } from '@/app/components/employees-table/table-content/table-content'
 import { TableHeader } from '@/app/components/employees-table/table-header/table-header'
-import { Loader } from '@/app/shared/loader/loader'
 import { setSelectedFilter } from '@/app/store/app-slice'
 import { fetchEmployeesThunk } from '@/app/store/app-thunks'
 import { useAppDispatch, useAppSelector } from '@/app/store/store'
-
-let firstRenderFlag = true
+import NProgress from 'nprogress'
 
 import s from './employees-table.module.scss'
+
+let firstRenderFlag = true
 
 export const EmployeesTable = () => {
   const dispatch = useAppDispatch()
@@ -33,15 +33,13 @@ export const EmployeesTable = () => {
   }, [dispatch, activeFilters, searchParams])
 
   if (loading) {
-    return <Loader />
+    NProgress.start()
+  } else {
+    NProgress.done()
   }
 
   if (error) {
     return <div>Error: {error}</div>
-  }
-
-  if (!filteredEmployees || !filteredEmployees.length) {
-    return <div>Данные по сотрудникам отсутствуют.</div>
   }
 
   return (
