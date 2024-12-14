@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date'
 import dataFromBD from './employees-db.json'
 
 export const getEmployeesData = (query: any) => {
-  const delay = Math.random() * 500
+  const delay = Math.random() * 300
 
   return new Promise<Employee[]>(res => {
     setTimeout(() => {
@@ -17,6 +17,7 @@ export const getEmployeesData = (query: any) => {
       } else {
         let activeFilters = query.filters
         const activeSort = query.sort
+        let resultEmployees: Employee[] = data
 
         if (activeFilters) {
           activeFilters = activeFilters.replace('waiter', 'официант')
@@ -28,7 +29,7 @@ export const getEmployeesData = (query: any) => {
           const isFilterByRole = rolesToCheck.some(role => activeFiltersArr.includes(role))
           const isFilterByArchived = activeFiltersArr.includes('archived')
 
-          const filteredData = data.filter(employee => {
+          const filteredData = resultEmployees.filter(employee => {
             if (activeFiltersArr.length === 0) {
               return true
             }
@@ -45,12 +46,12 @@ export const getEmployeesData = (query: any) => {
             }
           })
 
-          return res(filteredData)
+          resultEmployees = filteredData
         }
         if (activeSort) {
           const sortField = activeSort.split(',')[0]
           const sortOrder = activeSort.split(',')[1]
-          const sortedData = [...data].sort((a: Employee, b: Employee) => {
+          const sortedData = [...resultEmployees].sort((a: Employee, b: Employee) => {
             if (sortField === 'name') {
               if (sortOrder === 'asc') {
                 return a.name < b.name ? 1 : -1
@@ -70,11 +71,10 @@ export const getEmployeesData = (query: any) => {
             return 0
           })
 
-          res(sortedData)
+          resultEmployees = sortedData
         }
+        res(resultEmployees)
       }
     }, delay)
   })
 }
-
-//Math.random() * 1000

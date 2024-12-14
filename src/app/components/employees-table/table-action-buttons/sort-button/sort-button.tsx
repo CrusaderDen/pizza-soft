@@ -20,23 +20,28 @@ const sortArrows: SortArrows = {
 
 export const SortButton = ({ field }: SortButtonProps) => {
   const [searchParams, setSearchParams] = useSearchParams()
+
   const sortParams = searchParams.get('sort')?.split(',') || ''
   const sortField = sortParams[0]
   const sortOrder = sortParams[1] || ''
+
   const sortLabel = sortField === field ? sortArrows[sortOrder as SortOrder] : sortArrows['']
 
   const handleSort = () => {
-    setSearchParams({ sort: [field, sortOrder].join(',') })
+    const currentParams = new URLSearchParams(window.location.search)
+
+    currentParams.set('sort', [field, sortOrder].join(','))
 
     if (sortOrder === '') {
-      setSearchParams({ sort: [field, 'desc'].join(',') })
+      currentParams.set('sort', [field, 'desc'].join(','))
     }
     if (sortOrder === 'desc') {
-      setSearchParams({ sort: [field, 'asc'].join(',') })
+      currentParams.set('sort', [field, 'asc'].join(','))
     }
     if (sortOrder === 'asc') {
-      setSearchParams({ sort: [field].toString() })
+      currentParams.delete('sort')
     }
+    setSearchParams(currentParams)
   }
 
   return (

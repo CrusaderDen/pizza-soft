@@ -7,17 +7,12 @@ type updateSearchParamAttr = {
   role: string
 }
 
-export const useFilterSearchParam = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const removeParam = (param: string) => {
-    const newSearchParams = new URLSearchParams(searchParams)
-
-    newSearchParams.delete(param)
-    setSearchParams(newSearchParams)
-  }
+export const useUpdateSearchParam = () => {
+  const [_, setSearchParams] = useSearchParams()
+  const params = new URLSearchParams(window.location.search)
 
   const updateSearchParam = ({ isChecked, param, prevFiltration, role }: updateSearchParamAttr) => {
-    let nextFiltration = ''
+    let nextFiltration
 
     if (isChecked) {
       nextFiltration = prevFiltration.length === 0 ? role : prevFiltration + ',' + role
@@ -27,14 +22,14 @@ export const useFilterSearchParam = () => {
         .filter(p => p !== role)
         .join(',')
       if (nextFiltration.length === 0) {
-        removeParam(param)
+        params.delete(param)
 
         return
       }
     }
-
-    setSearchParams({ [param]: nextFiltration })
+    params.set(param, nextFiltration)
+    setSearchParams(params)
   }
 
-  return { removeParam, updateSearchParam }
+  return { updateSearchParam }
 }

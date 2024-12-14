@@ -2,7 +2,7 @@ import { ChangeEvent, forwardRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import { FilterRole, Role } from '@/api/app-api.types'
-import { useFilterSearchParam } from '@/utils/remove-search-param'
+import { useUpdateSearchParam } from '@/utils/use-update-search-param'
 
 import s from '@/app/components/filters/filter-option/filter-option.module.scss'
 
@@ -14,7 +14,7 @@ type FilterOptionProps = {
 export const FilterOption = forwardRef<HTMLInputElement, FilterOptionProps>(
   ({ className, role }, ref) => {
     const [searchParams] = useSearchParams()
-    const { updateSearchParam } = useFilterSearchParam()
+    const { updateSearchParam } = useUpdateSearchParam()
 
     const optionRole = role[0] as Role
     const optionLabel = role[1]
